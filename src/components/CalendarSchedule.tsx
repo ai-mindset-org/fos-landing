@@ -12,33 +12,25 @@ interface CalEvent {
 }
 
 const events: CalEvent[] = [
-  // Week 1: Identity (23-29 March)
+  // Week 1: Personal OS + Skills (23-28 March)
   { day: 23, month: 3, time: '18:00 CET', type: 'lecture', title: 'Agent-Centric Paradigm', speaker: 'Степан Гершуни' },
-  { day: 24, month: 3, time: '12:00 CET', type: 'focus-session', title: 'Focus Session' },
-  { day: 24, month: 3, time: '14:00 CET', type: 'workshop', title: 'Personal OS setup' },
-  { day: 25, month: 3, time: '18:00 CET', type: 'workshop', title: 'Skills & workflows' },
-  { day: 27, month: 3, time: '18:00 CET', type: 'practice', title: 'Peer review' },
-  { day: 28, month: 3, time: '12:00 CET', type: 'office-hours', title: 'Office Hours' },
-  // Week 2: Architecture (30 March - 5 April)
-  { day: 30, month: 3, time: '18:00 CET', type: 'lecture', title: 'Token flow, Context graph', speaker: 'Степан Гершуни' },
-  { day: 31, month: 3, time: '12:00 CET', type: 'focus-session', title: 'Focus Session' },
-  { day: 31, month: 3, time: '14:00 CET', type: 'workshop', title: 'Ontology — company data model' },
-  { day: 1, month: 4, time: '18:00 CET', type: 'workshop', title: 'Integrations, automation' },
-  { day: 3, month: 4, time: '18:00 CET', type: 'practice', title: 'Peer review ontologies' },
-  { day: 4, month: 4, time: '12:00 CET', type: 'office-hours', title: 'Office Hours' },
-  // Week 3: Process (6-12 April)
-  { day: 6, month: 4, time: '18:00 CET', type: 'lecture', title: 'Champions, Scaling, New Roles', speaker: 'Степан Гершуни' },
-  { day: 7, month: 4, time: '12:00 CET', type: 'focus-session', title: 'Focus Session' },
-  { day: 7, month: 4, time: '14:00 CET', type: 'workshop', title: 'Process automation' },
-  { day: 8, month: 4, time: '18:00 CET', type: 'workshop', title: 'ROI, metrics, agent pods' },
-  { day: 10, month: 4, time: '18:00 CET', type: 'practice', title: 'Demo Day prep' },
-  { day: 11, month: 4, time: '12:00 CET', type: 'demo-day', title: 'DEMO DAY' },
+  { day: 25, month: 3, time: '18:00 CET', type: 'workshop', title: 'Установка Personal OS', speaker: 'Приглашённый эксперт' },
+  { day: 27, month: 3, time: '18:00 CET', type: 'office-hours', title: 'Q&A, peer review', speaker: 'Степан + AIM' },
+  // Week 2: Business OS + Agent Infrastructure (30 March - 4 April)
+  { day: 30, month: 3, time: '18:00 CET', type: 'lecture', title: 'Firm as a token flow. Context graph. Security', speaker: 'Степан Гершуни' },
+  { day: 1, month: 4, time: '18:00 CET', type: 'workshop', title: 'Модель данных компании. Agent infrastructure', speaker: 'Приглашённый эксперт' },
+  { day: 3, month: 4, time: '18:00 CET', type: 'office-hours', title: 'Peer review онтологий', speaker: 'Степан + AIM' },
+  // Week 3: Company Functions + Guest Speakers (6-11 April)
+  { day: 6, month: 4, time: '18:00 CET', type: 'lecture', title: 'Масштабирование. AI Champions. Новые роли', speaker: 'Степан Гершуни' },
+  { day: 8, month: 4, time: '18:00 CET', type: 'workshop', title: 'Автоматизация процесса: маркетинг/sales/operations', speaker: 'Гость-эксперт' },
+  { day: 10, month: 4, time: '18:00 CET', type: 'practice', title: 'Подготовка к Demo Day', speaker: 'AIM' },
+  { day: 11, month: 4, time: '12:00 CET', type: 'demo-day', title: 'Demo Day — Презентация roadmaps' },
 ];
 
 const weekLabels: Record<number, string> = {
-  1: 'Week 1: Identity',
-  2: 'Week 2: Architecture',
-  3: 'Week 3: Process',
+  1: 'Week 1: Personal OS + Skills',
+  2: 'Week 2: Business OS + Agent Infrastructure',
+  3: 'Week 3: Company Functions + Guest Speakers',
 };
 
 const typeLabels: Record<EventType, string> = {
@@ -73,9 +65,9 @@ function getEventsForDay(day: number, month: 3 | 4): CalEvent[] {
 }
 
 function getWeekNumber(day: number, month: 3 | 4): number | null {
-  if (month === 3 && day >= 23 && day <= 29) return 1;
-  if ((month === 3 && day >= 30) || (month === 4 && day <= 5)) return 2;
-  if (month === 4 && day >= 6 && day <= 12) return 3;
+  if (month === 3 && day >= 23 && day <= 28) return 1;
+  if ((month === 3 && day >= 30) || (month === 4 && day <= 4)) return 2;
+  if (month === 4 && day >= 6 && day <= 11) return 3;
   return null;
 }
 
@@ -102,7 +94,7 @@ function MonthGrid({ month, year, selectedDay, hoveredDay, activeWeek, onSelect,
   for (let d = 1; d <= totalDays; d++) cells.push(d);
 
   const sprintStart = month === 3 ? 23 : 1;
-  const sprintEnd = month === 3 ? 31 : 12;
+  const sprintEnd = month === 3 ? 31 : 11;
 
   return (
     <div className="cal-month">
@@ -265,43 +257,34 @@ export function CalendarSchedule() {
       <div className="cal-legend">
         <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-lecture" /> Lecture</span>
         <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-workshop" /> Workshop</span>
-        <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-focus" /> Focus Session</span>
         <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-practice" /> Practice</span>
         <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-office" /> Office Hours</span>
         <span className="cal-legend-item"><span className="cal-legend-swatch cal-legend-demo" /> Demo Day</span>
       </div>
       <div className="cal-week-details">
         <div className={`cal-week-detail ${activeWeek !== null && activeWeek !== 1 ? 'cal-week-detail-dimmed' : ''}`}>
-          <div className="cal-week-detail-title cal-week-label-1">week 1 // identity</div>
+          <div className="cal-week-detail-title cal-week-label-1">week 1 // personal OS + skills</div>
           <div className="cal-week-detail-list">
-            <div>Mon 18:00 CET &mdash; лекция: Agent-Centric Paradigm</div>
-            <div>Tue 12:00 CET &mdash; focus session</div>
-            <div>Tue 14:00 CET &mdash; воркшоп: Personal OS setup</div>
-            <div>Wed 18:00 CET &mdash; воркшоп: Skills & workflows</div>
-            <div>Fri 18:00 CET &mdash; практика: peer review</div>
-            <div>Sat 12:00 CET &mdash; office hours</div>
+            <div>Mon 23 Mar 18:00 CET &mdash; лекция: Agent-Centric Paradigm (Степан Гершуни)</div>
+            <div>Wed 25 Mar 18:00 CET &mdash; воркшоп: Установка Personal OS (Приглашённый эксперт)</div>
+            <div>Fri 27 Mar 18:00 CET &mdash; office hours: Q&A, peer review (Степан + AIM)</div>
           </div>
         </div>
         <div className={`cal-week-detail ${activeWeek !== null && activeWeek !== 2 ? 'cal-week-detail-dimmed' : ''}`}>
-          <div className="cal-week-detail-title cal-week-label-2">week 2 // architecture</div>
+          <div className="cal-week-detail-title cal-week-label-2">week 2 // business OS + agent infrastructure</div>
           <div className="cal-week-detail-list">
-            <div>Mon 18:00 CET &mdash; лекция: Token flow, Context graph</div>
-            <div>Tue 12:00 CET &mdash; focus session</div>
-            <div>Tue 14:00 CET &mdash; воркшоп: онтология компании</div>
-            <div>Wed 18:00 CET &mdash; воркшоп: интеграции, автоматизация</div>
-            <div>Fri 18:00 CET &mdash; практика: peer review онтологий</div>
-            <div>Sat 12:00 CET &mdash; office hours</div>
+            <div>Mon 30 Mar 18:00 CET &mdash; лекция: Firm as a token flow. Context graph. Security (Степан Гершуни)</div>
+            <div>Wed 1 Apr 18:00 CET &mdash; воркшоп: Модель данных компании. Agent infrastructure (Приглашённый эксперт)</div>
+            <div>Fri 3 Apr 18:00 CET &mdash; office hours: Peer review онтологий (Степан + AIM)</div>
           </div>
         </div>
         <div className={`cal-week-detail ${activeWeek !== null && activeWeek !== 3 ? 'cal-week-detail-dimmed' : ''}`}>
-          <div className="cal-week-detail-title cal-week-label-3">week 3 // process</div>
+          <div className="cal-week-detail-title cal-week-label-3">week 3 // company functions + guest speakers</div>
           <div className="cal-week-detail-list">
-            <div>Mon 18:00 CET &mdash; лекция: Champions, Scaling, New Roles</div>
-            <div>Tue 12:00 CET &mdash; focus session</div>
-            <div>Tue 14:00 CET &mdash; воркшоп: автоматизация процессов</div>
-            <div>Wed 18:00 CET &mdash; воркшоп: ROI, метрики, agent pods</div>
-            <div>Fri 18:00 CET &mdash; практика: подготовка к Demo Day</div>
-            <div>Sat 12:00 CET &mdash; DEMO DAY</div>
+            <div>Mon 6 Apr 18:00 CET &mdash; лекция: Масштабирование. AI Champions. Новые роли (Степан Гершуни)</div>
+            <div>Wed 8 Apr 18:00 CET &mdash; воркшоп: Автоматизация процесса: маркетинг/sales/operations (Гость-эксперт)</div>
+            <div>Fri 10 Apr 18:00 CET &mdash; подготовка к Demo Day (AIM)</div>
+            <div>Sat 11 Apr 12:00 CET &mdash; DEMO DAY: Презентация roadmaps</div>
           </div>
         </div>
       </div>

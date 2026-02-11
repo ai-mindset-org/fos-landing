@@ -6,9 +6,8 @@ import { CodeBlock } from './components/CodeBlock'
 import { CaseCard } from './components/CaseCard'
 import { HeroTerminal } from './components/HeroTerminal'
 import { InteractiveTerminal } from './components/InteractiveTerminal'
-import { GlitchText } from './components/GlitchText'
 import { CalendarSchedule } from './components/CalendarSchedule'
-import { TokenStream, CostCollapse, EvolutionStages, CoaseanFirm, LeverageFormula, SpeakerSilhouette, WeekIdentitySVG, WeekArchitectureSVG, WeekProcessSVG } from './components/VisualMetaphors'
+import { SpeakerSilhouette } from './components/VisualMetaphors'
 
 function renderTerminalOutput(text: string) {
   const urlRegex = /(https?:\/\/[^\s]+|t\.me\/[^\s]+)/g
@@ -71,7 +70,7 @@ function OpenChannelTerminal() {
                   help: [
                     '  /telegram    открыть канал сообщества',
                     '  /email       написать команде',
-                    '  /apply       подать заявку на BOS Sprint',
+                    '  /apply       подать заявку на AI-Native Organizations Sprint',
                     '  /website     сайт AI Mindset',
                     '  /linkedin    профиль в LinkedIn',
                     '  /stepan      Степан Гершуни (CyberOS)',
@@ -103,7 +102,7 @@ function OpenChannelTerminal() {
       help: [
         '  /telegram    открыть канал сообщества',
         '  /email       написать команде',
-        '  /apply       подать заявку на BOS Sprint',
+        '  /apply       подать заявку на AI-Native Organizations Sprint',
         '  /website     сайт AI Mindset',
         '  /linkedin    профиль в LinkedIn',
         '  /stepan      Степан Гершуни (CyberOS)',
@@ -112,7 +111,7 @@ function OpenChannelTerminal() {
       ],
       '/telegram': ['-> https://t.me/aim_community'],
       '/email': ['-> team@aimindset.co'],
-      '/apply': ['-> заявка: https://t.me/alex_named', '', 'AI Mindset x CyberOS -- BOS Sprint', 'старт: 23 марта 2026'],
+      '/apply': ['-> заявка: https://t.me/alex_named', '', 'AI Mindset x CyberOS -- AI-Native Organizations Sprint', 'старт: 23 марта 2026'],
       '/website': ['-> https://aimindset.org'],
       '/linkedin': ['-> https://www.linkedin.com/in/povalyaev/'],
       '/stepan': ['Степан Гершуни', 'Principal at cyber.fund // CybOS // CoDos', '', '-> t.me/sgershuni'],
@@ -164,34 +163,6 @@ function OpenChannelTerminal() {
   )
 }
 
-function CustomCursor() {
-  const [pos, setPos] = useState({ x: 0, y: 0 })
-  const [hovering, setHovering] = useState(false)
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY })
-    const over = (e: MouseEvent) => {
-      const t = e.target as HTMLElement
-      if (t.closest('a, button, .case-card, .speaker-card, .stat-card, .audience-card, .identity-card, .selfcheck-card, .price-card, .eval-badge, input')) {
-        setHovering(true)
-      }
-    }
-    const out = () => setHovering(false)
-    window.addEventListener('mousemove', move)
-    document.addEventListener('mouseover', over)
-    document.addEventListener('mouseout', out)
-    return () => {
-      window.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseover', over)
-      document.removeEventListener('mouseout', out)
-    }
-  }, [])
-
-  return (
-    <div className={`custom-cursor ${hovering ? 'hovering' : ''}`} style={{ left: pos.x, top: pos.y }} />
-  )
-}
-
 export default function App() {
   const [mobileMenu, setMobileMenu] = useState(false)
   const [expandedAudience, setExpandedAudience] = useState<string | null>(null)
@@ -207,8 +178,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-wrapper" style={{ cursor: 'none' }}>
-      <CustomCursor />
+    <div className="app-wrapper">
       {/* ── nav ── */}
       <nav>
         <div className="nav-content">
@@ -219,10 +189,10 @@ export default function App() {
             aria-label="Menu"
           >///</button>
           <div className={`nav-links ${mobileMenu ? 'open' : ''}`}>
-            <a href="#program">программа</a>
-            <a href="#speakers">спикеры</a>
-            <a href="#pricing">цены</a>
-            <a href="https://t.me/alex_named" className="nav-apply" style={{ color: 'var(--cyan)' }}>/apply</a>
+            <a href="#program">[программа]</a>
+            <a href="#speakers">[спикеры]</a>
+            <a href="#pricing">[цены]</a>
+            <a href="https://t.me/alex_named" className="nav-apply" style={{ color: 'var(--cyan)' }}>[/apply]</a>
           </div>
         </div>
       </nav>
@@ -235,7 +205,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="hero-badge">AI native organizations // 3 недели</div>
+            <div className="hero-badge">ai-native organizations // 3 недели // 23 марта &ndash; 11 апреля</div>
           </motion.div>
 
           <motion.div
@@ -243,7 +213,9 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <GlitchText text="business operational<br />system {sprint}" />
+            <h1 style={{ fontFamily: 'var(--font-mono, monospace)', textTransform: 'lowercase', fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.1, margin: '24px 0' }}>
+              ai-native organizations {'{'}<span style={{ color: 'var(--cyan)' }}>sprint</span>{'}'}
+            </h1>
           </motion.div>
 
           <motion.p
@@ -252,36 +224,8 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="hero-subtitle"
           >
-            но сначала нужно понять, кто ты. компания &ndash; это поток токенов.
+            3-недельная программа для фаундеров и C-level. агенты &ndash; новые сотрудники. не автоматизация старых процессов, а новая архитектура бизнеса.
           </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="hero-not-course"
-          >
-            3-недельная программа трансформации компании в AI-native организацию
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.28 }}
-            className="hero-not-course"
-            style={{ opacity: 0.6 }}
-          >
-            ai mindset &times; cyberos &ndash; identity &rarr; architecture &rarr; process
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            style={{ display: 'flex', justifyContent: 'center', margin: '40px 0' }}
-          >
-            <TokenStream />
-          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -411,27 +355,7 @@ export default function App() {
           </Reveal>
 
           <Reveal>
-            <CostCollapse />
-          </Reveal>
-
-          <Reveal>
-            <EvolutionStages />
-          </Reveal>
-
-          <Reveal>
-            <LeverageFormula />
-          </Reveal>
-
-          <Reveal>
             <div className="inline-quote quote-margin">&laquo;компании, которые не успеют измениться за ближайший год-два, умрут. IT &ndash; ~1 год на адаптацию. другие бизнесы &ndash; 2-3 года.&raquo; &ndash; Степан Гершуни</div>
-          </Reveal>
-
-          <Reveal>
-            <div className="inline-quote quote-margin">&laquo;консалтинговые бизнесы начинают скейлиться: 10 людей обслуживают 100 клиентов.&raquo; &ndash; Степан Гершуни</div>
-          </Reveal>
-
-          <Reveal>
-            <div className="inline-quote quote-margin">&laquo;нет компании, которая перестала платить палантиру. это indefinitely.&raquo; &ndash; Степан Гершуни</div>
           </Reveal>
         </div>
       </section>
@@ -450,26 +374,12 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_01 // identity</div>
-                  <h3 className="week-title">персональная операционная система</h3>
-                  <p className="week-desc">установка платформы. claude, cursor, MCP. контекст и первые скиллы.</p>
+                  <div className="week-label week-label--big">week_01 // Personal OS + Skills</div>
+                  <h3 className="week-title">Personal OS + Skills</h3>
+                  <p className="week-desc">установка AI-стека. claude, cursor, MCP. контекст и первые скиллы. POS pre-recordings как подготовка.</p>
                   <p className="week-level">от awareness к usage. первые 30 часов.</p>
                   <p className="week-stack">стек: Claude Code, CLAUDE.md, skills, evals, GitHub</p>
                 </div>
-
-                <Reveal>
-                  <div className="vm-week"><WeekIdentitySVG /></div>
-                </Reveal>
-
-                <CodeBlock title="week_01 -- identity">
-                  <div><span className="tok-accent">context</span>{' = capture(role, company, priorities)'}</div>
-                  <div>{'  |> store(CLAUDE.md);'}</div>
-                  <br />
-                  <div><span className="tok-accent">skills</span>{' = create("daily-brief", "research", "draft")'}</div>
-                  <div>{'  |> attach(evals);'}</div>
-                  <br />
-                  <div>{'return '}<span className="tok-accent">personal_os</span>{'.init(context, skills);'}</div>
-                </CodeBlock>
 
                 <Reveal>
                   <div className="inline-quote quote-margin">&laquo;сначала человек пришёл, у него есть просто установленная платформа с подпиской.&raquo; &ndash; Степан Гершуни</div>
@@ -487,25 +397,12 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_02 // architecture</div>
-                  <h3 className="week-title">контекстная архитектура компании</h3>
-                  <p className="week-desc">онтология компании. модель данных. интеграции. компания читаема для агентов.</p>
+                  <div className="week-label week-label--big">week_02 // Business OS + Agent Infrastructure</div>
+                  <h3 className="week-title">Business OS + Agent Infrastructure</h3>
+                  <p className="week-desc">онтология компании. модель данных. безопасность и compliance. компания читаема для агентов.</p>
                   <p className="week-level">от usage к building. контекст важнее промпта.</p>
                   <p className="week-stack">стек: MCP-серверы, Telegram/Calendar/Linear интеграции, онтология</p>
                 </div>
-
-                <Reveal>
-                  <div className="vm-week"><WeekArchitectureSVG /></div>
-                </Reveal>
-
-                <CodeBlock title="week_02 -- architecture">
-                  <div><span className="tok-accent">ontology</span>{' = map(company)'}</div>
-                  <div>{'  |> entities(deals, contacts, processes);'}</div>
-                  <br />
-                  <div><span className="tok-accent">mcp</span>{' = connect("telegram", "calendar", "linear");'}</div>
-                  <br />
-                  <div>{'return '}<span className="tok-accent">company</span>{'.readable_by(agents);'}</div>
-                </CodeBlock>
 
                 <Reveal>
                   <div className="inline-quote quote-margin">&laquo;на выходе получает онтологию &ndash; структуру контекста размечено.&raquo; &ndash; Степан Гершуни</div>
@@ -523,32 +420,15 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_03 // process</div>
-                  <h3 className="week-title">AI-native процессы</h3>
-                  <p className="week-desc">автоматизация. ROI-метрики. agent pods. roadmap на 90 дней.</p>
+                  <div className="week-label week-label--big">week_03 // Company Functions + масштабирование</div>
+                  <h3 className="week-title">Company Functions + масштабирование</h3>
+                  <p className="week-desc">конкретный процесс: маркетинг, sales или operations. ROI-метрики. AI Champion plan. 90-day Roadmap.</p>
                   <p className="week-level">от building к engineering. агенты, MCP, оркестрация.</p>
                   <p className="week-stack">стек: агентные пайплайны, оркестрация, ROI-метрики, Cursor</p>
                 </div>
 
                 <Reveal>
-                  <div className="vm-week"><WeekProcessSVG /></div>
-                </Reveal>
-
-                <CodeBlock title="week_03 -- process">
-                  <div><span className="tok-accent">process</span>{' = automate("marketing") |> measure(roi);'}</div>
-                  <br />
-                  <div>{'orchestrate(marketing, product, sales)'}</div>
-                  <div>{'  |> enable("micro-negotiations");'}</div>
-                  <br />
-                  <div>{'return '}<span className="tok-accent">ai_native</span>{'.transform(company);'}</div>
-                </CodeBlock>
-
-                <Reveal>
                   <div className="inline-quote quote-margin">&laquo;конкретно маркетинг. реально процесс, которым можно считать ROI.&raquo; &ndash; Степан Гершуни</div>
-                </Reveal>
-
-                <Reveal>
-                  <CoaseanFirm />
                 </Reveal>
 
                 <div className="case-grid">
@@ -651,23 +531,7 @@ export default function App() {
           </div>
 
           <Reveal>
-            <CodeBlock title="identity">
-              <div><span className="tok-accent">ai_mindset</span>{' = community(founders, operators, builders)'}</div>
-              <div>{'  |> practice("context engineering");'}</div>
-              <br />
-              <div><span className="tok-accent">cyberos</span>{' = system(identity, architecture, process)'}</div>
-              <div>{'  |> connect(MCP, agents, workflows);'}</div>
-              <br />
-              <div>{'return '}<span className="tok-accent">{'{ ai_mindset, cyberos }'}</span>{'.merge("BOS Sprint");'}</div>
-            </CodeBlock>
-          </Reveal>
-
-          <Reveal>
             <div className="inline-quote quote-margin">&laquo;образование &ndash; это не про контент. это про бренд. мы берём деньги за трансформацию.&raquo; &ndash; Степан Гершуни</div>
-          </Reveal>
-
-          <Reveal>
-            <div className="inline-quote quote-margin">&laquo;самое сложное &ndash; это не написать промпт, а заметить момент, когда ты можешь его написать.&raquo;</div>
           </Reveal>
         </div>
       </section>
@@ -778,6 +642,10 @@ export default function App() {
 
           <Reveal>
             <p className="early-bird-note">Early Bird: -15% до 9 марта &middot; Реферальная программа: 15% комиссия</p>
+          </Reveal>
+
+          <Reveal>
+            <p className="early-bird-note">POS Sprint (&euro;890) &ndash; рекомендуемый первый шаг. участники получают POS pre-recordings за 2 недели до старта.</p>
           </Reveal>
 
         </div>
