@@ -19,7 +19,7 @@ const commandList: { cmd: string; desc: string }[] = [
 
 const commands: Record<string, string[]> = {
   '/help': [
-    'ai-native organizations sprint',
+    'ai native company sprint',
     '',
     'навыки:',
     '  /daily-brief      утренний бриф',
@@ -201,7 +201,7 @@ const commands: Record<string, string[]> = {
   ],
   '/about': [
     'ai mindset x cyberos',
-    'identity-first organization',
+    'ai native company sprint',
     '',
     '6+ когорт. 200+ выпускников.',
     'от персональных ai-навыков',
@@ -213,16 +213,38 @@ const commands: Record<string, string[]> = {
     'не курс по промптингу.',
     'трансформация компании в ai-native организацию.',
     '',
-    '"образование -- это про бренд, не про контент.',
-    ' мы берём деньги за трансформацию,',
-    ' не за информацию."',
+    'агенты -- новые сотрудники.',
+    'кто это понимает, строится по-другому.',
   ],
+}
+
+function ClickableOutput({ text, onCommand }: { text: string; onCommand: (cmd: string) => void }) {
+  const parts = text.split(/(\/[a-z-]+)/g)
+  if (parts.length === 1) return <span>{text}</span>
+  return (
+    <span>
+      {parts.map((part, i) => {
+        if (/^\/[a-z-]+$/.test(part) && commands[part]) {
+          return (
+            <span
+              key={i}
+              className="terminal-cmd-link"
+              onClick={() => onCommand(part)}
+            >
+              {part}
+            </span>
+          )
+        }
+        return <span key={i}>{part}</span>
+      })}
+    </span>
+  )
 }
 
 export function InteractiveTerminal() {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<{ type: 'cmd' | 'out'; text: string }[]>([
-    { type: 'out', text: 'ai-native organizations // sprint' },
+    { type: 'out', text: 'ai native company sprint // console' },
     { type: 'out', text: 'введите /help для списка навыков' },
   ])
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -298,7 +320,7 @@ export function InteractiveTerminal() {
 
     if (trimmed === 'clear') {
       setHistory([
-        { type: 'out', text: 'ai-native organizations // sprint' },
+        { type: 'out', text: 'ai native company sprint // console' },
         { type: 'out', text: 'введите /help для списка навыков' },
       ])
       setInput('')
@@ -395,7 +417,7 @@ export function InteractiveTerminal() {
             {line.type === 'cmd' ? (
               <span><span className="terminal-prompt">$</span> {line.text}</span>
             ) : (
-              <span>{line.text}</span>
+              <ClickableOutput text={line.text} onCommand={execute} />
             )}
           </div>
         ))}

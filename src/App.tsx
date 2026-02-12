@@ -2,12 +2,15 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 import { Reveal } from './components/Reveal'
-import { CodeBlock } from './components/CodeBlock'
 import { CaseCard } from './components/CaseCard'
-import { HeroTerminal } from './components/HeroTerminal'
+import { GlitchText } from './components/GlitchText'
 import { InteractiveTerminal } from './components/InteractiveTerminal'
 import { CalendarSchedule } from './components/CalendarSchedule'
-import { SpeakerSilhouette } from './components/VisualMetaphors'
+import { SystemMap } from './components/SystemMap'
+import { CustomCursor } from './components/CustomCursor'
+import { WeekIdentitySVG, WeekArchitectureSVG, WeekProcessSVG } from './components/VisualMetaphors'
+
+/* ── Open Channel Terminal ── */
 
 function renderTerminalOutput(text: string) {
   const urlRegex = /(https?:\/\/[^\s]+|t\.me\/[^\s]+)/g
@@ -17,7 +20,7 @@ function renderTerminalOutput(text: string) {
   return (
     <span className="interactive-line--out">
       {parts.map((part, i) => {
-        if (urlRegex.test(part)) {
+        if (/(https?:\/\/[^\s]+|t\.me\/[^\s]+)/.test(part)) {
           const href = part.startsWith('http') ? part : `https://${part}`
           return (
             <a key={i} href={href} target="_blank" rel="noopener" className="terminal-link">
@@ -46,6 +49,16 @@ function OpenChannelTerminal() {
 
   const hasAutoHelped = useRef(false)
 
+  const helpLines = [
+    '  /telegram    открыть канал сообщества',
+    '  /apply       подать заявку на спринт',
+    '  /pos         POS Sprint (отдельная программа)',
+    '  /bundle      POS + AINC bundle',
+    '  /website     сайт AI Mindset',
+    '  /stepan      Степан Гершуни (CyberOS)',
+    '  /alex        Александр Поваляев (AI Mindset)',
+  ]
+
   useEffect(() => {
     const el = scrollRef.current?.closest('.open-channel')
     if (!el) return
@@ -65,18 +78,7 @@ function OpenChannelTerminal() {
               setTimeout(() => {
                 setInput('')
                 setLines(prev => [...prev, { type: 'cmd', text: 'help' }])
-                const responses: Record<string, string[]> = {
-                  help: [
-                    '  /telegram    открыть канал сообщества',
-                    '  /email       написать команде',
-                    '  /apply       подать заявку на спринт',
-                    '  /website     сайт AI Mindset',
-                    '  /linkedin    профиль в LinkedIn',
-                    '  /stepan      Степан Гершуни (CyberOS)',
-                    '  /alex        Александр Поваляев (AI Mindset)',
-                  ],
-                }
-                responses.help.forEach((line, idx) => {
+                helpLines.forEach((line, idx) => {
                   setTimeout(() => setLines(prev => [...prev, { type: 'out', text: line }]), idx * 80)
                 })
               }, 300)
@@ -97,18 +99,11 @@ function OpenChannelTerminal() {
     setLines(prev => [...prev, { type: 'cmd', text: cmd }])
 
     const responses: Record<string, string[]> = {
-      help: [
-        '  /telegram    открыть канал сообщества',
-        '  /email       написать команде',
-        '  /apply       подать заявку на спринт',
-        '  /website     сайт AI Mindset',
-        '  /linkedin    профиль в LinkedIn',
-        '  /stepan      Степан Гершуни (CyberOS)',
-        '  /alex        Александр Поваляев (AI Mindset)',
-      ],
+      help: helpLines,
       '/telegram': ['-> https://t.me/aim_community'],
-      '/email': ['-> team@aimindset.co'],
       '/apply': ['-> заявка: https://t.me/alex_named', '', 'AI Mindset x CyberOS -- ai-native organizations sprint', 'старт: 23 марта 2026'],
+      '/pos': ['POS Sprint: €890 (2 недели, Personal OS)', '', 'отдельная программа:', '-> https://aimindset.org/sprint-pos'],
+      '/bundle': ['POS + AI-Native Organizations Sprint bundle: €1,990 (экономия €390)', '', 'POS Sprint (€890) -- персональный AI-стек, контекст, навыки.', 'готовит фундамент для AI-Native Organizations Sprint.', 'pre-recordings за 2 недели до старта.', '', 'AI-Native Organizations Sprint (€1,490) -- онтология, agent infra,', 'company functions, Demo Day.', '', '-> заявка: https://t.me/alex_named'],
       '/website': ['-> https://aimindset.org'],
       '/linkedin': ['-> https://www.linkedin.com/in/povalyaev/'],
       '/stepan': ['Степан Гершуни', 'Principal at cyber.fund // CybOS // CoDos', '', '-> t.me/sgershuni'],
@@ -159,116 +154,138 @@ function OpenChannelTerminal() {
   )
 }
 
+/* ── Scroll Progress ── */
+
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(h > 0 ? window.scrollY / h : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <div className="scroll-progress" style={{ height: `${progress * 100}%` }} />
+  )
+}
+
+/* ── Main App ── */
+
 export default function App() {
   const [mobileMenu, setMobileMenu] = useState(false)
 
   return (
     <div className="app-wrapper">
+      <CustomCursor />
+      <ScrollProgress />
       {/* ── nav ── */}
       <nav>
         <div className="nav-content">
-          <a href="#" className="logo"><img src="/logo.png" alt="AI Mindset" className="logo-img" /> AI Mindset <span className="logo-dim">&times; CyberOS</span></a>
+          <div className="nav-status">
+            <span className="nav-status-dot" />
+            <span className="nav-status-text">ONLINE</span>
+            <span className="nav-system-id">SYSTEM_ID: AIM_AINC_V2.0</span>
+          </div>
           <button
             className="mobile-toggle"
             onClick={() => setMobileMenu(!mobileMenu)}
             aria-label="Menu"
           >///</button>
           <div className={`nav-links ${mobileMenu ? 'open' : ''}`}>
-            <a href="#program">[программа]</a>
-            <a href="#speakers">[спикеры]</a>
-            <a href="#results">[результаты]</a>
-            <a href="#pricing">[цены]</a>
-            <a href="https://t.me/alex_named" className="nav-apply" style={{ color: 'var(--cyan)' }}>[/apply]</a>
+            <a href="#program">программа</a>
+            <a href="#map">карта</a>
+            <a href="#speakers">спикеры</a>
+            <a href="#console">консоль</a>
+            <a href="#pricing">цены</a>
+            <a href="https://t.me/alex_named" className="nav-apply">/apply</a>
           </div>
         </div>
       </nav>
 
-      {/* ── 1. HERO (dark) ── */}
+      {/* ── 1. HERO ── */}
       <section className="hero">
-        <div className="container">
+        <div className="hero-noise" />
+        <div className="container hero-grid">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="hero-left"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="hero-badge">ai-native organizations // 3 недели // 23 марта &ndash; 11 апреля</div>
-          </motion.div>
+            <div className="hero-badge">ai-native organizations sprint // 3 недели // 23 марта &ndash; 11 апреля</div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
             <h1>
-              агенты &ndash; новые сотрудники.
+              <GlitchText>агенты &ndash; новые сотрудники.</GlitchText>
               <br />
-              <span style={{ color: 'var(--cyan)' }}>трансформация за 3 недели.</span>
+              <span className="hero-cyan">трансформация за 3 недели.</span>
             </h1>
-          </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="hero-subtitle"
-          >
-            не автоматизация старых процессов, а новая архитектура бизнеса.
-            программа для фаундеров и C-level компаний 10&ndash;300 человек.
-          </motion.p>
+            <p className="hero-subtitle">
+              не автоматизация старых процессов, а новая архитектура бизнеса.
+              для фаундеров и C-level компаний 10&ndash;300 человек.
+            </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <CodeBlock title="ai-native ~ init">
-              <HeroTerminal />
-            </CodeBlock>
+            <div className="hero-buttons">
+              <a href="#pricing" className="btn btn-primary">подать заявку</a>
+              <a href="#program" className="btn btn-outline">программа</a>
+            </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="hero-buttons"
+            className="hero-right"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <a href="#pricing" className="btn btn-primary">подать заявку</a>
-            <a href="#program" className="btn btn-outline">программа</a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="hero-stats"
-          >
-            <div className="stat">
-              <div className="stat-value">6+</div>
-              <div className="stat-label">когорт</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value">200+</div>
-              <div className="stat-label">выпускников</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value">3</div>
-              <div className="stat-label">недели</div>
-            </div>
-            <div className="stat">
-              <div className="stat-value">~6ч</div>
-              <div className="stat-label">в неделю</div>
+            <div className="status-card">
+              <div className="status-card-header">
+                <span className="status-card-title">SYSTEM STATUS</span>
+                <span className="status-card-indicator" />
+              </div>
+              <div className="status-card-row">
+                <span className="status-card-label">PROGRAM</span>
+                <span className="status-card-value">AI-NATIVE ORGANIZATIONS SPRINT v2.0</span>
+              </div>
+              <div className="status-card-row">
+                <span className="status-card-label">STATUS</span>
+                <span className="status-card-value status-card-value--active">ENROLLING</span>
+              </div>
+              <div className="status-card-row">
+                <span className="status-card-label">START</span>
+                <span className="status-card-value">23 MARCH 2026</span>
+              </div>
+              <div className="status-card-row">
+                <span className="status-card-label">DURATION</span>
+                <span className="status-card-value">3 WEEKS &middot; ~6H/WEEK</span>
+              </div>
+              <div className="status-card-row">
+                <span className="status-card-label">ALUMNI</span>
+                <span className="status-card-value">500+ &middot; 10+ COHORTS</span>
+              </div>
+              <div className="status-card-protocols">
+                <span className="status-card-label">FOCUS PROTOCOLS</span>
+                <div className="status-card-tags">
+                  <span className="status-tag">IDENTITY</span>
+                  <span className="status-tag">ARCHITECTURE</span>
+                  <span className="status-tag">PROCESS</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ── 2. ПРОГРАММА ── */}
-      <section id="program">
+      {/* ── 2. ПРОГРАММА (dark) ── */}
+      <section id="program" className="section-dark">
         <div className="container">
           <Reveal>
             <div className="section-label">// программа</div>
-            <h2 className="section-title">три недели трансформации</h2>
-            <p className="section-subtitle">от персональной OS до AI-native организации. рабочие артефакты, не теория. лекции (Степан Гершуни) + воркшопы + домашка + office hours.</p>
+            <h2 className="section-title section-title--light">три недели трансформации</h2>
+            <p className="section-subtitle section-subtitle--light">от персональной OS до AI-native организации. артефакты, не теория. лекции (Степан Гершуни) + воркшопы + office hours.</p>
           </Reveal>
 
           <div className="program-timeline">
@@ -276,21 +293,28 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_01 // Personal OS + Skills</div>
-                  <h3 className="week-title">Personal OS + Skills</h3>
-                  <p className="week-desc">установка AI-стека. claude, cursor, MCP. контекст и первые скиллы. POS pre-recordings как подготовка.</p>
-                  <p className="week-stack">стек: Claude Code, CLAUDE.md, skills, evals, GitHub</p>
+                  <div className="week-number">01</div>
+                  <div className="week-header-text">
+                    <div className="week-label">PERSONAL OS + SKILLS</div>
+                    <p className="week-desc">установка AI-стека. claude code, cursor, MCP. контекст и первые скиллы.</p>
+                    <p className="week-stack">стек: Claude Code, CLAUDE.md, skills, evals, GitHub</p>
+                    <p className="week-dates">23&ndash;28 марта &middot; пн/ср/пт 18:00 CET</p>
+                  </div>
                 </div>
 
-                <Reveal>
-                  <div className="inline-quote quote-margin">&laquo;сначала человек пришёл, у него есть просто установленная платформа с подпиской.&raquo; &ndash; Степан Гершуни</div>
-                </Reveal>
+                <div className="week-metaphor">
+                  <WeekIdentitySVG />
+                </div>
 
                 <div className="case-grid">
                   <CaseCard label="АРТЕФАКТ" title="CLAUDE.md" desc="контекстный файл: роль, компания, принципы решений, стиль коммуникации." detail="фундамент всего. агент знает кто вы, что вам важно, как вы принимаете решения. без этого AI -- просто чат." />
                   <CaseCard label="АРТЕФАКТ" title="skills + evals" desc="2-3 слэш-команды для ежедневных задач. каждая с оценкой качества." detail="написать навык, создать набор тестов, опубликовать на GitHub. бинарная оценка pass/fail -- никаких шкал." />
                   <CaseCard label="КЕЙС" title="утренний бриф" desc="автоматическая ежедневная сводка: календарь, почта, telegram, приоритеты." detail="не просто саммари, а actionable next steps. агент знает ваш контекст и фильтрует шум." />
                 </div>
+
+                <Reveal>
+                  <div className="inline-quote">&laquo;сначала человек пришёл, у него есть просто установленная платформа с подпиской.&raquo; &ndash; Степан Гершуни</div>
+                </Reveal>
               </div>
             </Reveal>
 
@@ -298,15 +322,18 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_02 // Business OS + Agent Infrastructure</div>
-                  <h3 className="week-title">Business OS + Agent Infrastructure</h3>
-                  <p className="week-desc">онтология компании. модель данных. безопасность, права доступа, compliance. компания читаема для агентов.</p>
-                  <p className="week-stack">стек: MCP-серверы, Telegram/Calendar/Linear интеграции, онтология</p>
+                  <div className="week-number">02</div>
+                  <div className="week-header-text">
+                    <div className="week-label">BUSINESS OS + AGENT INFRASTRUCTURE</div>
+                    <p className="week-desc">онтология компании. модель данных. безопасность, права доступа, compliance.</p>
+                    <p className="week-stack">стек: MCP-серверы, Telegram/Calendar/Linear, онтология</p>
+                    <p className="week-dates">30 марта &ndash; 4 апреля &middot; пн/ср/пт 18:00 CET</p>
+                  </div>
                 </div>
 
-                <Reveal>
-                  <div className="inline-quote quote-margin">&laquo;инфраструктура, безопасность доступа, compliance &ndash; фундамент для агентов в компании.&raquo; &ndash; Степан Гершуни</div>
-                </Reveal>
+                <div className="week-metaphor">
+                  <WeekArchitectureSVG />
+                </div>
 
                 <div className="case-grid">
                   <CaseCard label="КЕЙС // VC FUND" title="auto due diligence" desc="после Zoom: транскрипт запускает 4 параллельных агента. полная карточка сделки за 3 минуты." detail="финансы, рынок, инвестиционный тезис, команда -- каждый агент работает параллельно. вместо 3 дней ручной работы аналитика." />
@@ -320,27 +347,34 @@ export default function App() {
             <Reveal>
               <div className="week-block">
                 <div className="week-header">
-                  <div className="week-label week-label--big">week_03 // Company Functions + масштабирование</div>
-                  <h3 className="week-title">Company Functions + масштабирование</h3>
-                  <p className="week-desc">конкретный процесс: маркетинг, sales или operations. ROI-метрики. AI Champion plan. 90-day Roadmap.</p>
-                  <p className="week-stack">стек: агентные пайплайны, оркестрация, ROI-метрики, Cursor</p>
+                  <div className="week-number">03</div>
+                  <div className="week-header-text">
+                    <div className="week-label">COMPANY FUNCTIONS + МАСШТАБИРОВАНИЕ</div>
+                    <p className="week-desc">конкретный процесс: маркетинг, sales или operations. ROI-метрики. Demo Day.</p>
+                    <p className="week-stack">стек: агентные пайплайны, оркестрация, ROI-метрики, Cursor</p>
+                    <p className="week-dates">6&ndash;11 апреля &middot; пн/ср/пт 18:00 + сб 12:00 Demo Day</p>
+                  </div>
                 </div>
 
-                <Reveal>
-                  <div className="inline-quote quote-margin">&laquo;конкретно маркетинг. реально процесс, которым можно считать ROI.&raquo; &ndash; Степан Гершуни</div>
-                </Reveal>
+                <div className="week-metaphor">
+                  <WeekProcessSVG />
+                </div>
 
                 <div className="case-grid">
                   <CaseCard label="КЕЙС // ОРГАНИЗАЦИЯ" title="микро-переговоры" desc="маркетинг-агент говорит продуктовому: фича готова -- включай в кампанию." detail="автоматическая координация между отделами. агенты договариваются 24/7 без участия людей." />
-                  <CaseCard label="КЕЙС // АГЕНТСТВО" title="агент поиска площадок" desc="агент собирает цены всех площадок города, анализирует, предлагает оптимальный вариант." detail="задача 6 человек сведена к 1 агенту. не просто парсинг цен -- полный анализ с учётом требований, доступности, логистики." />
+                  <CaseCard label="КЕЙС // АГЕНТСТВО" title="агент поиска площадок" desc="агент собирает цены всех площадок города, анализирует, предлагает оптимальный вариант." detail="задача 6 человек сведена к 1 агенту. не просто парсинг цен -- полный анализ с учётом требований." />
                   <CaseCard label="АРТЕФАКТ" title="90-дневный план" desc="полный план трансформации: quick wins, чемпионы, governance, масштабирование." detail="конкретный план: что делать в первую неделю, первый месяц, первый квартал." />
                 </div>
+
+                <Reveal>
+                  <div className="inline-quote">&laquo;конкретно маркетинг. реально процесс, которым можно считать ROI.&raquo; &ndash; Степан Гершуни</div>
+                </Reveal>
               </div>
             </Reveal>
           </div>
 
           <Reveal>
-            <p className="section-subtitle" style={{ marginTop: 32 }}>текущий стек: claude code, cursor, MCP, github, linear, telegram, airtable. технологии меняются &ndash; парадигмы остаются.</p>
+            <p className="section-note">текущий стек: claude code, cursor, MCP, github, linear, telegram, airtable. технологии меняются &ndash; парадигмы остаются.</p>
           </Reveal>
 
           <Reveal>
@@ -349,7 +383,22 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── 3. КОНСОЛЬ ── */}
+      {/* ── 3. SYSTEM MAP (dark) ── */}
+      <section id="map" className="section-dark">
+        <div className="container">
+          <Reveal>
+            <div className="section-label">// карта трансформации</div>
+            <h2 className="section-title section-title--light">путь участника</h2>
+            <p className="section-subtitle section-subtitle--light">от POS pre-recordings до Demo Day. каждый этап &ndash; конкретный артефакт.</p>
+          </Reveal>
+
+          <Reveal>
+            <SystemMap />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── 4. КОНСОЛЬ (light) ── */}
       <section id="console">
         <div className="container">
           <Reveal>
@@ -363,39 +412,45 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── 4. СПИКЕРЫ ── */}
-      <section id="speakers">
+      {/* ── 5. СПИКЕРЫ (dark) ── */}
+      <section id="speakers" className="section-dark">
         <div className="container">
           <Reveal>
             <div className="section-label">// спикеры</div>
-            <h2 className="section-title">кто ведёт программу</h2>
+            <h2 className="section-title section-title--light">кто ведёт программу</h2>
           </Reveal>
 
           <Reveal>
             <div className="speakers-grid">
-              <div className="speaker-card card-bracketed">
-                <img src="/speakers/stepan-gershuni.jpg" alt="Степан Гершуни" className="speaker-avatar" />
-                <div className="speaker-info">
-                  <h3 className="speaker-name">Степан Гершуни</h3>
-                  <p className="speaker-role">Principal at cyber.fund // CybOS // CoDos</p>
-                  <p className="speaker-bio">фаундер Credentia, Deep Skills, Codex Town, Friendroid. VC в Cyber Fund с 200+ портфельными компаниями. автор CybOS &ndash; open-source AI-native OS для организаций.</p>
-                  <div className="speaker-links">
-                    <a href="https://github.com/sgershuni" className="speaker-link" target="_blank" rel="noopener">GitHub</a>
-                    <a href="https://x.com/sgershuni" className="speaker-link" target="_blank" rel="noopener">Twitter</a>
-                    <a href="https://t.me/sgershuni" className="speaker-link" target="_blank" rel="noopener">Telegram</a>
+              <div className="speaker-card-dark">
+                <div className="speaker-card-dark-photo">
+                  <img src="/speakers/stepan-gershuni.jpg" alt="Степан Гершуни" className="speaker-avatar-dark" />
+                  <div className="speaker-scanline-overlay" />
+                </div>
+                <div className="speaker-info-dark">
+                  <div className="speaker-role-dark">Principal // cyber.fund // CybOS</div>
+                  <h3 className="speaker-name-dark">Степан Гершуни</h3>
+                  <p className="speaker-bio-dark">фаундер Credentia, Deep Skills. VC в Cyber Fund, 200+ портфельных компаний. автор CybOS.</p>
+                  <div className="speaker-links-dark">
+                    <a href="https://github.com/sgershuni" target="_blank" rel="noopener">&gt; github</a>
+                    <a href="https://x.com/sgershuni" target="_blank" rel="noopener">&gt; twitter</a>
+                    <a href="https://t.me/sgershuni" target="_blank" rel="noopener">&gt; telegram</a>
                   </div>
                 </div>
               </div>
-              <div className="speaker-card card-bracketed">
-                <img src="/speakers/alexander-povaliaev.jpg" alt="Александр Поваляев" className="speaker-avatar" />
-                <div className="speaker-info">
-                  <h3 className="speaker-name">Александр Поваляев</h3>
-                  <p className="speaker-role">Founder // AI Mindset</p>
-                  <p className="speaker-bio">фаундер AI Mindset. 15+ лет на пересечении технологий, бизнеса и людей. 6 когорт AI Lab, 200+ выпускников. context engineering, агентные системы.</p>
-                  <div className="speaker-links">
-                    <a href="https://www.linkedin.com/in/povalyaev/" className="speaker-link" target="_blank" rel="noopener">LinkedIn</a>
-                    <a href="https://aimindset.org" className="speaker-link" target="_blank" rel="noopener">Website</a>
-                    <a href="https://t.me/alex_named" className="speaker-link" target="_blank" rel="noopener">Telegram</a>
+              <div className="speaker-card-dark">
+                <div className="speaker-card-dark-photo">
+                  <img src="/speakers/alexander-povaliaev.jpg" alt="Александр Поваляев" className="speaker-avatar-dark" />
+                  <div className="speaker-scanline-overlay" />
+                </div>
+                <div className="speaker-info-dark">
+                  <div className="speaker-role-dark">Founder // AI Mindset</div>
+                  <h3 className="speaker-name-dark">Александр Поваляев</h3>
+                  <p className="speaker-bio-dark">фаундер AI Mindset. 10+ когорт AI Lab, 500+ выпускников. context engineering, агентные системы.</p>
+                  <div className="speaker-links-dark">
+                    <a href="https://www.linkedin.com/in/povalyaev/" target="_blank" rel="noopener">&gt; linkedin</a>
+                    <a href="https://aimindset.org" target="_blank" rel="noopener">&gt; website</a>
+                    <a href="https://t.me/alex_named" target="_blank" rel="noopener">&gt; telegram</a>
                   </div>
                 </div>
               </div>
@@ -403,54 +458,45 @@ export default function App() {
           </Reveal>
 
           <Reveal>
-            <div className="secret-speakers-grid secret-speakers-grid--4">
-              <div className="secret-card">
-                <div>
-                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // ai-агенты</div>
-                  <div className="secret-label">практик, строящий агентные системы в продакшне. имя объявим ближе к старту.</div>
-                </div>
+            <div className="secret-speakers-grid">
+              <div className="secret-card-glass">
+                <div className="secret-card-icon">[?]</div>
+                <div className="secret-card-domain">// ai-агенты</div>
+                <div className="secret-card-hint">практик, строящий агентные системы в продакшне</div>
               </div>
-              <div className="secret-card">
-                <div>
-                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // маркетинг</div>
-                  <div className="secret-label">AI-native маркетолог. автоматизация воронок, контент, аналитика. имя объявим ближе к старту.</div>
-                </div>
+              <div className="secret-card-glass">
+                <div className="secret-card-icon">[?]</div>
+                <div className="secret-card-domain">// маркетинг</div>
+                <div className="secret-card-hint">AI-native маркетолог. воронки, контент, аналитика</div>
               </div>
-              <div className="secret-card">
-                <div>
-                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // operations</div>
-                  <div className="secret-label">трансформация процессов через агентов. от ручной координации к оркестрации. имя объявим ближе к старту.</div>
-                </div>
+              <div className="secret-card-glass">
+                <div className="secret-card-icon">[?]</div>
+                <div className="secret-card-domain">// operations</div>
+                <div className="secret-card-hint">трансформация процессов через агентов</div>
               </div>
-              <div className="secret-card">
-                <div>
-                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // продукт</div>
-                  <div className="secret-label">AI-first продуктовый подход. context engineering, MCP, навыки. имя объявим ближе к старту.</div>
-                </div>
+              <div className="secret-card-glass">
+                <div className="secret-card-icon">[?]</div>
+                <div className="secret-card-domain">// продукт</div>
+                <div className="secret-card-hint">AI-first продуктовый подход. MCP, навыки</div>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── 5. РЕЗУЛЬТАТЫ ── */}
+      {/* ── 6. РЕЗУЛЬТАТЫ (light-gray) ── */}
       <section id="results" className="section-bg-top">
         <div className="container">
           <Reveal>
             <div className="section-label">// результаты</div>
             <h2 className="section-title">что говорят выпускники</h2>
-            <p className="section-subtitle">6 когорт. 200+ выпускников. от персональных AI-навыков до организационной трансформации.</p>
           </Reveal>
 
           <Reveal>
             <div className="results-grid">
               <div className="result-card">
-                <div className="result-value">200+</div>
-                <div className="result-label">выпускников<br />6+ когорт</div>
+                <div className="result-value">500+</div>
+                <div className="result-label">выпускников<br />10+ когорт</div>
               </div>
               <div className="result-card">
                 <div className="result-value">57%</div>
@@ -475,11 +521,6 @@ export default function App() {
                 <div className="testimonial-role">выпускник AUTO02</div>
               </div>
               <div className="testimonial-card card-bracketed">
-                <div className="testimonial-quote">&laquo;Cursor изменил мою жизнь. Cursor меняет подход к работе с информацией.&raquo;</div>
-                <div className="testimonial-author">Влада Зорина</div>
-                <div className="testimonial-role">выпускница AUTO02</div>
-              </div>
-              <div className="testimonial-card card-bracketed">
                 <div className="testimonial-quote">&laquo;начал с Cursor, по-настоящему затянуло с Claude &ndash; подсел на Anthropic за человечность моделей.&raquo;</div>
                 <div className="testimonial-author">Анатолий</div>
                 <div className="testimonial-role">Director of Engineering, Semrush</div>
@@ -491,75 +532,67 @@ export default function App() {
               </div>
             </div>
           </Reveal>
-
-          <Reveal>
-            <div className="inline-quote quote-margin" style={{ marginTop: 48 }}>&laquo;образование &ndash; это не про контент. это про бренд. мы берём деньги за трансформацию, не за информацию.&raquo; &ndash; Степан Гершуни</div>
-          </Reveal>
         </div>
       </section>
 
-      {/* ── 6. ТАРИФЫ ── */}
+      {/* ── 7. ТАРИФЫ (light) ── */}
       <section id="pricing">
         <div className="container">
           <Reveal>
             <div className="section-label text-center">// тарифы</div>
             <h2 className="section-title text-center">инвестиция в трансформацию</h2>
-            <p className="section-subtitle text-center" style={{ margin: '0 auto 48px' }}>фаундеры и C-level компаний 10&ndash;300 человек.</p>
           </Reveal>
 
           <Reveal>
-            <div className="pricing-grid">
-              <div className="price-card featured card-bracketed" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div className="price-tier">base</div>
+            <div className="pricing-grid pricing-grid--2">
+              <div className="price-card featured card-bracketed">
+                <div className="price-tier">AI-Native Organizations Sprint</div>
                 <div className="price-amount">&euro;1,490</div>
-                <div className="price-period">за участника</div>
-                <div className="price-discount">команда 3+: &euro;1,290/человек</div>
+                <div className="price-period">3 недели &middot; Business OS</div>
+                <div className="price-discount">команда 3+: &euro;1,290/чел</div>
                 <ul className="price-features">
-                  <li>все лекции + воркшопы (3 недели)</li>
+                  <li>все лекции + воркшопы</li>
                   <li>персональные и командные артефакты</li>
                   <li>office hours с разбором кейсов</li>
                   <li>сообщество практиков</li>
                   <li>библиотека навыков</li>
-                  <li>презентации, воркшопы, коворкинг</li>
+                  <li>Demo Day + 90-day Roadmap</li>
                 </ul>
-                <a href="https://t.me/alex_named" className="btn btn-primary btn-block" style={{ marginTop: 'auto' }}>подать заявку</a>
+                <a href="https://t.me/alex_named" className="btn btn-primary btn-block">подать заявку</a>
               </div>
-              <div className="price-card card-bracketed" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div className="price-tier">enterprise</div>
-                <div className="price-amount">Custom</div>
-                <div className="price-period">от 5 участников</div>
-                <div className="price-discount price-discount--neutral">индивидуальный расчёт</div>
+
+              <div className="price-card price-card--bundle">
+                <div className="price-badge">BEST VALUE</div>
+                <div className="price-tier">POS + AI-Native Organizations bundle</div>
+                <div className="price-original">&euro;2,380</div>
+                <div className="price-amount">&euro;1,990</div>
+                <div className="price-period">оба спринта &middot; 5 недель</div>
+                <div className="price-save">экономия &euro;390</div>
                 <ul className="price-features">
-                  <li>всё из Base</li>
-                  <li>индивидуальная стратегия трансформации</li>
-                  <li>воркшопы на месте</li>
-                  <li>интеграция с вашими системами</li>
-                  <li>выделенная поддержка</li>
-                  <li>кастомный слой оркестрации агентов</li>
+                  <li>POS Sprint: персональный AI-стек + контекст</li>
+                  <li>AI Native Company Sprint: онтология + agent infra</li>
+                  <li>POS pre-recordings за 2 нед до старта</li>
+                  <li>полный путь трансформации</li>
+                  <li>приоритетная поддержка</li>
                 </ul>
-                <a href="https://t.me/alex_named" className="btn btn-primary btn-block" style={{ marginTop: 'auto' }}>обсудить pricing</a>
+                <a href="https://t.me/alex_named" className="btn btn-primary btn-block">подать заявку</a>
               </div>
             </div>
           </Reveal>
 
           <Reveal>
+            <p className="pricing-pos-link">POS Sprint (&euro;890) &ndash; <a href="https://aimindset.org/sprint-pos" target="_blank" rel="noopener">отдельная программа</a></p>
             <p className="early-bird-note">Early Bird: -15% до 9 марта &middot; Реферальная программа: 15% комиссия</p>
           </Reveal>
-
-          <Reveal>
-            <p className="early-bird-note">POS Sprint (&euro;890) &ndash; рекомендуемый первый шаг. участники получают POS pre-recordings за 2 недели до старта.</p>
-          </Reveal>
-
         </div>
       </section>
 
-      {/* ── OPEN CHANNEL (contact) ── */}
-      <section id="contact" className="open-channel">
+      {/* ── OPEN CHANNEL (dark) ── */}
+      <section id="contact" className="open-channel section-dark">
         <div className="container">
           <Reveal>
-            <h2 className="open-channel-title">OPEN CHANNEL</h2>
+            <div className="section-label">// open channel</div>
           </Reveal>
-
           <Reveal>
             <OpenChannelTerminal />
           </Reveal>
@@ -567,22 +600,24 @@ export default function App() {
       </section>
 
       {/* ── footer ── */}
-      <footer>
+      <footer className="footer-dark">
         <div className="container">
-          <div className="footer-links-row">
-            <a href="https://aimindset.org" target="_blank" rel="noopener">AI Mindset</a>
-            <a href="https://cybos.ai" target="_blank" rel="noopener">CyberOS</a>
-            <a href="https://cyber.fund" target="_blank" rel="noopener">cyber.fund</a>
-            <a href="https://github.com/sgershuni" target="_blank" rel="noopener">GitHub</a>
-          </div>
-          <div className="footer-contacts-row">
-            <a href="https://t.me/alex_named" target="_blank" rel="noopener">telegram @alex_named</a>
-            <a href="mailto:team@aimindset.co">team@aimindset.co</a>
-            <a href="https://t.me/aim_community" target="_blank" rel="noopener">@aim_community</a>
-          </div>
-          <div className="footer-bottom-row">
-            <a href="#contact" className="btn btn-outline btn-sm">связаться</a>
-            <span>AI Mindset &times; cyber.fund &middot; 2026</span>
+          <div className="footer-row">
+            <div className="footer-brand">
+              <span className="footer-logo">AI Mindset &times; CyberOS</span>
+              <span className="footer-year">2026</span>
+            </div>
+            <div className="footer-nav">
+              <a href="https://aimindset.org" target="_blank" rel="noopener">AI Mindset</a>
+              <a href="https://cybos.ai" target="_blank" rel="noopener">CyberOS</a>
+              <a href="https://cyber.fund" target="_blank" rel="noopener">cyber.fund</a>
+            </div>
+            <div className="footer-contacts">
+              <a href="https://t.me/alex_named" target="_blank" rel="noopener">@alex_named</a>
+              <a href="https://t.me/sgershuni" target="_blank" rel="noopener">@sgershuni</a>
+              <a href="mailto:info@aimindset.org">info@aimindset.org</a>
+              <a href="https://t.me/aim_community" target="_blank" rel="noopener">@aim_community</a>
+            </div>
           </div>
         </div>
       </footer>
