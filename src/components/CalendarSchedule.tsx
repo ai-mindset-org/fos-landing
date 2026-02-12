@@ -17,7 +17,7 @@ const events: CalEvent[] = [
   { day: 25, month: 3, time: '18:00 CET', type: 'workshop', title: 'Установка Personal OS', speaker: 'Приглашённый эксперт' },
   { day: 27, month: 3, time: '18:00 CET', type: 'office-hours', title: 'Q&A, peer review', speaker: 'Степан + AIM' },
   // Week 2: Business OS + Agent Infrastructure (30 March - 4 April)
-  { day: 30, month: 3, time: '18:00 CET', type: 'lecture', title: 'Firm as a token flow. Context graph. Security', speaker: 'Степан Гершуни' },
+  { day: 30, month: 3, time: '18:00 CET', type: 'lecture', title: 'Онтология компании. Безопасность и доступ', speaker: 'Степан Гершуни' },
   { day: 1, month: 4, time: '18:00 CET', type: 'workshop', title: 'Модель данных компании. Agent infrastructure', speaker: 'Приглашённый эксперт' },
   { day: 3, month: 4, time: '18:00 CET', type: 'office-hours', title: 'Peer review онтологий', speaker: 'Степан + AIM' },
   // Week 3: Company Functions + Guest Speakers (6-11 April)
@@ -273,7 +273,7 @@ export function CalendarSchedule() {
         <div className={`cal-week-detail ${activeWeek !== null && activeWeek !== 2 ? 'cal-week-detail-dimmed' : ''}`}>
           <div className="cal-week-detail-title cal-week-label-2">week 2 // business OS + agent infrastructure</div>
           <div className="cal-week-detail-list">
-            <div>Mon 30 Mar 18:00 CET &mdash; лекция: Firm as a token flow. Context graph. Security (Степан Гершуни)</div>
+            <div>Mon 30 Mar 18:00 CET &mdash; лекция: Онтология компании. Безопасность и доступ (Степан Гершуни)</div>
             <div>Wed 1 Apr 18:00 CET &mdash; воркшоп: Модель данных компании. Agent infrastructure (Приглашённый эксперт)</div>
             <div>Fri 3 Apr 18:00 CET &mdash; office hours: Peer review онтологий (Степан + AIM)</div>
           </div>

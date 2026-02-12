@@ -19,7 +19,7 @@ const commandList: { cmd: string; desc: string }[] = [
 
 const commands: Record<string, string[]> = {
   '/help': [
-    'bos sprint // business operation system',
+    'ai-native organizations sprint',
     '',
     'навыки:',
     '  /daily-brief      утренний бриф',
@@ -76,7 +76,7 @@ const commands: Record<string, string[]> = {
     '',
     '10:00  product sync (zoom)',
     '12:00  обед с инвестором',
-    '14:00  подготовка bos sprint',
+    '14:00  подготовка ai-native sprint',
     '16:00  office hours',
     '',
     'свободные слоты: 11:00-12:00, 15:00-16:00',
@@ -159,7 +159,7 @@ const commands: Record<string, string[]> = {
     'и месяцы работы в лондонской фирме.',
   ],
   '/transform': [
-    '$ cyberos --check "ai-readiness"',
+    '$ aim --check "ai-readiness"',
     '',
     'ai-assisted -> ai-native -> agent-centric',
     '(используем gpt)  (сначала ai)  (агенты = workforce)',
@@ -222,7 +222,7 @@ const commands: Record<string, string[]> = {
 export function InteractiveTerminal() {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<{ type: 'cmd' | 'out'; text: string }[]>([
-    { type: 'out', text: 'bos sprint // business operation system' },
+    { type: 'out', text: 'ai-native organizations // sprint' },
     { type: 'out', text: 'введите /help для списка навыков' },
   ])
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -298,7 +298,7 @@ export function InteractiveTerminal() {
 
     if (trimmed === 'clear') {
       setHistory([
-        { type: 'out', text: 'bos sprint // business operation system' },
+        { type: 'out', text: 'ai-native organizations // sprint' },
         { type: 'out', text: 'введите /help для списка навыков' },
       ])
       setInput('')
@@ -386,7 +386,7 @@ export function InteractiveTerminal() {
         <span className="terminal-dot red" />
         <span className="terminal-dot yellow" />
         <span className="terminal-dot green" />
-        <span className="terminal-title">bos ~ console</span>
+        <span className="terminal-title">ai-native ~ console</span>
         <span className="terminal-title-right">root@aim:~</span>
       </div>
       <div ref={scrollRef} className="interactive-terminal-body">

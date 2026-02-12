@@ -8,12 +8,12 @@ export function HeroTerminal() {
   const [speedMultiplier, setSpeedMultiplier] = useState(1)
 
   const script: { type: 'cmd' | 'out'; html: string; delay: number }[] = [
-    { type: 'cmd', html: 'cyberos init <span class="terminal-string">"your-company"</span>', delay: 0 },
-    { type: 'out', html: 'загрузка контекстной архитектуры...', delay: 600 },
+    { type: 'cmd', html: 'aim init <span class="terminal-string">"your-company"</span>', delay: 0 },
+    { type: 'out', html: 'загрузка контекста компании...', delay: 600 },
     { type: 'cmd', html: 'ontology <span class="terminal-keyword">--map</span> <span class="terminal-string">"company-context"</span>', delay: 1500 },
     { type: 'out', html: 'сущности: сделки, контакты, процессы, знания', delay: 2100 },
     { type: 'cmd', html: 'process <span class="terminal-keyword">--automate</span> <span class="terminal-string">"first-workflow"</span>', delay: 3000 },
-    { type: 'out', html: '<span class="terminal-green-text">AI-native трансформация запущена</span>', delay: 3750 },
+    { type: 'out', html: '<span class="terminal-green-text">ai-native трансформация запущена</span>', delay: 3750 },
   ]
 
   useEffect(() => {
