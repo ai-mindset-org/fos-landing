@@ -133,12 +133,12 @@ function OpenChannelTerminal() {
         {lines.map((line, i) => (
           <div key={i} style={{ marginBottom: 2 }}>
             {line.type === 'sys' && <span className="terminal-green-text">{line.text}</span>}
-            {line.type === 'cmd' && <span><span style={{ color: 'var(--cyan)' }}>aim&gt;</span> {line.text}</span>}
+            {line.type === 'cmd' && <span><span style={{ color: '#fff' }}>●</span><span style={{ color: '#5588aa' }}>/</span> {line.text}</span>}
             {line.type === 'out' && renderTerminalOutput(line.text)}
           </div>
         ))}
         <div className="open-channel-input-row">
-          <span className="terminal-prompt" style={{ color: 'var(--cyan)' }}>aim&gt;</span>
+          <span className="terminal-prompt"><span style={{ color: '#fff' }}>●</span><span style={{ color: '#5588aa' }}>/</span></span>
           <input
             ref={inputRef}
             type="text"
@@ -221,7 +221,7 @@ export default function App() {
             <h1>
               <GlitchText>агенты &ndash; новые сотрудники.</GlitchText>
               <br />
-              <span className="hero-cyan">трансформация за 3 недели.</span>
+              <span style={{ color: '#d0d0d4' }}>трансформация за 3 недели.</span>
             </h1>
 
             <p className="hero-subtitle">
@@ -269,9 +269,9 @@ export default function App() {
               <div className="status-card-protocols">
                 <span className="status-card-label">FOCUS PROTOCOLS</span>
                 <div className="status-card-tags">
-                  <span className="status-tag">IDENTITY</span>
-                  <span className="status-tag">ARCHITECTURE</span>
-                  <span className="status-tag">PROCESS</span>
+                  <span className="status-tag">PERSONAL OS</span>
+                  <span className="status-tag">BUSINESS OS</span>
+                  <span className="status-tag">COMPANY FUNCTIONS</span>
                 </div>
               </div>
             </div>
@@ -307,9 +307,9 @@ export default function App() {
                 </div>
 
                 <div className="case-grid">
-                  <CaseCard label="АРТЕФАКТ" title="CLAUDE.md" desc="контекстный файл: роль, компания, принципы решений, стиль коммуникации." detail="фундамент всего. агент знает кто вы, что вам важно, как вы принимаете решения. без этого AI -- просто чат." />
-                  <CaseCard label="АРТЕФАКТ" title="skills + evals" desc="2-3 слэш-команды для ежедневных задач. каждая с оценкой качества." detail="написать навык, создать набор тестов, опубликовать на GitHub. бинарная оценка pass/fail -- никаких шкал." />
-                  <CaseCard label="КЕЙС" title="утренний бриф" desc="автоматическая ежедневная сводка: календарь, почта, telegram, приоритеты." detail="не просто саммари, а actionable next steps. агент знает ваш контекст и фильтрует шум." />
+                  <CaseCard label="АРТЕФАКТ" title="CLAUDE.md" desc="файл, который объясняет AI кто вы и как вы работаете." detail="роль, компания, принципы решений, стиль. без этого AI -- просто чат. с этим -- персональный ассистент." />
+                  <CaseCard label="АРТЕФАКТ" title="skills + evals" desc="команды для ежедневных задач с автоматической проверкой качества." detail="пишете навык, создаёте тесты, публикуете. оценка pass/fail -- работает или нет." />
+                  <CaseCard label="КЕЙС" title="утренний бриф" desc="каждое утро агент собирает сводку: календарь, почта, задачи." detail="не саммари, а конкретные следующие шаги. агент знает ваш контекст и фильтрует шум." />
                 </div>
 
                 <Reveal>
@@ -336,9 +336,9 @@ export default function App() {
                 </div>
 
                 <div className="case-grid">
-                  <CaseCard label="КЕЙС // VC FUND" title="auto due diligence" desc="после Zoom: транскрипт запускает 4 параллельных агента. полная карточка сделки за 3 минуты." detail="финансы, рынок, инвестиционный тезис, команда -- каждый агент работает параллельно. вместо 3 дней ручной работы аналитика." />
-                  <CaseCard label="КЕЙС // LEGAL" title="юрист с контекстом" desc="контрактный агент знает: кто контрагент, кто инициировал, история похожих контрактов." detail="50-страничное дело загружено в AI. результат за секунды стоил бы GBP 500K и месяцы работы в лондонской фирме." />
-                  <CaseCard label="АРТЕФАКТ" title="онтология компании" desc="структурированный контекст: философия, сделки, портфельные компании, контакты." detail="инвестиционная философия, сделки, портфельные компании -- всё на карте. навыки автоматически срабатывают на события." />
+                  <CaseCard label="КЕЙС // VC FUND" title="auto due diligence" desc="после звонка 4 агента параллельно собирают карточку сделки. 3 минуты вместо 3 дней." detail="финансы, рынок, тезис, команда -- каждый агент работает одновременно. заменяет ручную работу аналитика." />
+                  <CaseCard label="КЕЙС // LEGAL" title="юрист с контекстом" desc="агент анализирует контракт с учётом истории и контрагента." detail="50-страничное дело за секунды. в лондонской фирме это стоило бы GBP 500K и месяцы работы." />
+                  <CaseCard label="АРТЕФАКТ" title="онтология компании" desc="карта бизнеса для AI: люди, сделки, процессы, знания." detail="агент видит всю картину. навыки срабатывают автоматически на события в компании." />
                 </div>
               </div>
             </Reveal>
@@ -361,9 +361,9 @@ export default function App() {
                 </div>
 
                 <div className="case-grid">
-                  <CaseCard label="КЕЙС // ОРГАНИЗАЦИЯ" title="микро-переговоры" desc="маркетинг-агент говорит продуктовому: фича готова -- включай в кампанию." detail="автоматическая координация между отделами. агенты договариваются 24/7 без участия людей." />
-                  <CaseCard label="КЕЙС // АГЕНТСТВО" title="агент поиска площадок" desc="агент собирает цены всех площадок города, анализирует, предлагает оптимальный вариант." detail="задача 6 человек сведена к 1 агенту. не просто парсинг цен -- полный анализ с учётом требований." />
-                  <CaseCard label="АРТЕФАКТ" title="90-дневный план" desc="полный план трансформации: quick wins, чемпионы, governance, масштабирование." detail="конкретный план: что делать в первую неделю, первый месяц, первый квартал." />
+                  <CaseCard label="КЕЙС // ОРГАНИЗАЦИЯ" title="микро-переговоры" desc="агенты отделов координируются между собой без участия людей." detail="маркетинг-агент говорит продуктовому: фича готова -- включай в кампанию. 24/7 без менеджеров." />
+                  <CaseCard label="КЕЙС // АГЕНТСТВО" title="агент поиска площадок" desc="один агент заменяет 6 человек: собирает, сравнивает, рекомендует." detail="не просто парсинг цен -- полный анализ всех площадок города с учётом требований." />
+                  <CaseCard label="АРТЕФАКТ" title="90-дневный план" desc="конкретный план: что делать на первой неделе, в первый месяц, в первый квартал." detail="quick wins, чемпионы внутри команды, правила работы с AI, масштабирование." />
                 </div>
 
                 <Reveal>
@@ -430,7 +430,7 @@ export default function App() {
                 <div className="speaker-info-dark">
                   <div className="speaker-role-dark">Principal // cyber.fund // CybOS</div>
                   <h3 className="speaker-name-dark">Степан Гершуни</h3>
-                  <p className="speaker-bio-dark">фаундер Credentia, Deep Skills. VC в Cyber Fund, 200+ портфельных компаний. автор CybOS.</p>
+                  <p className="speaker-bio-dark">фаундер Credentia, Deep Skills. Principal в Cyber Fund, 200+ портфельных компаний. 15+ лет в крипте и AI. автор CybOS и agent-centric методологии.</p>
                   <div className="speaker-links-dark">
                     <a href="https://github.com/sgershuni" target="_blank" rel="noopener">&gt; github</a>
                     <a href="https://x.com/sgershuni" target="_blank" rel="noopener">&gt; twitter</a>
@@ -446,7 +446,7 @@ export default function App() {
                 <div className="speaker-info-dark">
                   <div className="speaker-role-dark">Founder // AI Mindset</div>
                   <h3 className="speaker-name-dark">Александр Поваляев</h3>
-                  <p className="speaker-bio-dark">фаундер AI Mindset. 10+ когорт AI Lab, 500+ выпускников. context engineering, агентные системы.</p>
+                  <p className="speaker-bio-dark">фаундер AI Mindset. 10+ когорт, 500+ выпускников. context engineering, агентные пайплайны, evals. ex-product в HR-tech и EdTech.</p>
                   <div className="speaker-links-dark">
                     <a href="https://www.linkedin.com/in/povalyaev/" target="_blank" rel="noopener">&gt; linkedin</a>
                     <a href="https://aimindset.org" target="_blank" rel="noopener">&gt; website</a>
