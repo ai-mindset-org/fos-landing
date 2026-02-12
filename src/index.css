@@ -678,6 +678,9 @@ section {
     gap: 28px;
     margin-top: 28px;
 }
+.secret-speakers-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+}
 .secret-card {
     background: #fff;
     border: 1px dashed var(--border);
@@ -1364,6 +1367,7 @@ footer {
     .speaker-links { justify-content: center; }
     .pricing-grid { grid-template-columns: 1fr; }
     .secret-speakers-grid { grid-template-columns: 1fr; }
+    .secret-speakers-grid--4 { grid-template-columns: repeat(2, 1fr); }
     .testimonials-grid { grid-template-columns: 1fr; }
     .container { padding: 0 20px; }
     section { padding: 100px 0; }

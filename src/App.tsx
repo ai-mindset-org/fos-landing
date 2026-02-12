@@ -403,19 +403,33 @@ export default function App() {
           </Reveal>
 
           <Reveal>
-            <div className="secret-speakers-grid">
+            <div className="secret-speakers-grid secret-speakers-grid--4">
               <div className="secret-card">
                 <div>
                   <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт воркшопа</div>
-                  <div className="secret-label">практики из индустрии. эксперты по AI-агентам, маркетингу и организационной трансформации. имена объявим ближе к старту.</div>
+                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // ai-агенты</div>
+                  <div className="secret-label">практик, строящий агентные системы в продакшне. имя объявим ближе к старту.</div>
                 </div>
               </div>
               <div className="secret-card">
                 <div>
                   <div className="vm-silhouette"><SpeakerSilhouette /></div>
-                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт воркшопа</div>
-                  <div className="secret-label">практики из индустрии. эксперты по AI-агентам, маркетингу и организационной трансформации. имена объявим ближе к старту.</div>
+                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // маркетинг</div>
+                  <div className="secret-label">AI-native маркетолог. автоматизация воронок, контент, аналитика. имя объявим ближе к старту.</div>
+                </div>
+              </div>
+              <div className="secret-card">
+                <div>
+                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
+                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // operations</div>
+                  <div className="secret-label">трансформация процессов через агентов. от ручной координации к оркестрации. имя объявим ближе к старту.</div>
+                </div>
+              </div>
+              <div className="secret-card">
+                <div>
+                  <div className="vm-silhouette"><SpeakerSilhouette /></div>
+                  <div className="section-label" style={{ marginBottom: 8 }}>эксперт // продукт</div>
+                  <div className="secret-label">AI-first продуктовый подход. context engineering, MCP, навыки. имя объявим ближе к старту.</div>
                 </div>
               </div>
             </div>
