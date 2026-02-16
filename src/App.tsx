@@ -12,9 +12,12 @@ import { WeekIdentitySVG, WeekArchitectureSVG, WeekProcessSVG } from './componen
 
 /* ── Analytics Helper ── */
 
+const YM_ID = 106857835
+
 function track(event: string, data?: Record<string, string | number>) {
   const w = window as any
   if (w.umami) w.umami.track(event, data)
+  if (w.ym) w.ym(YM_ID, 'reachGoal', event, data)
 }
 
 /* ── Tally Form Helper ── */
