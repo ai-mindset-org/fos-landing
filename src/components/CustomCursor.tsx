@@ -14,7 +14,7 @@ export function CustomCursor() {
     }
     const over = (e: MouseEvent) => {
       const t = e.target as HTMLElement
-      if (t.closest('a, button, .case-card, .speaker-card-dark, .secret-card-glass, .price-card, .journey-node, .cal2-has-event, input, .slash-suggestion, .terminal-cmd-link')) {
+      if (t.closest('a, button, .case-card, .speaker-card-dark, .secret-card-glass, .price-card, .journey-node, .cal2-has-event, input, .slash-suggestion, .terminal-cmd-link, .speaker-lead-card, .pricing-card, .why-now-item')) {
         setHovering(true)
       }
     }

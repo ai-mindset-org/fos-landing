@@ -2,99 +2,181 @@ import { useState, useEffect, useRef } from 'react'
 
 const commandList: { cmd: string; desc: string }[] = [
   { cmd: '/help', desc: 'все навыки' },
+  { cmd: '/due-diligence', desc: 'AI-аудит компании' },
+  { cmd: '/onboarding', desc: 'онбординг сотрудника' },
+  { cmd: '/hr-pipeline', desc: 'автоматизация найма' },
+  { cmd: '/support', desc: 'саппорт на агентах' },
+  { cmd: '/sales', desc: 'квалификация лидов' },
+  { cmd: '/marketing', desc: 'контент-пайплайн' },
   { cmd: '/daily-brief', desc: 'утренний бриф' },
   { cmd: '/research', desc: 'глубокий ресёрч' },
-  { cmd: '/draft', desc: 'черновик документа' },
-  { cmd: '/calendar', desc: 'расписание' },
-  { cmd: '/dd', desc: 'auto due diligence' },
   { cmd: '/ontology', desc: 'контекстная карта' },
-  { cmd: '/automate', desc: 'автоматизация' },
-  { cmd: '/stack', desc: 'текущий стек' },
-  { cmd: '/mckinsey', desc: 'почему консалтинг умирает' },
-  { cmd: '/transform', desc: 'ai-readiness check' },
-  { cmd: '/agents', desc: 'микро-переговоры' },
+  { cmd: '/coordination', desc: 'межагентная коммуникация' },
   { cmd: '/apply', desc: 'подать заявку' },
   { cmd: '/about', desc: 'о программе' },
 ]
 
 const commands: Record<string, string[]> = {
   '/help': [
-    'ai native company sprint',
+    'ai-native organizations sprint // навыки агента',
     '',
-    'навыки:',
-    '  /daily-brief      утренний бриф',
+    'бизнес-процессы:',
+    '  /due-diligence     AI-аудит компании',
+    '  /onboarding        онбординг сотрудника за 2 часа',
+    '  /hr-pipeline       автоматизация найма',
+    '  /support           саппорт на агентах 24/7',
+    '  /sales             квалификация лидов',
+    '  /marketing         контент-пайплайн',
+    '',
+    'персональные:',
+    '  /daily-brief       утренний бриф из всех источников',
     '  /research          глубокий ресёрч за 3 минуты',
-    '  /draft             черновик документа',
-    '  /calendar          расписание на сегодня',
-    '  /dd                auto due diligence',
     '  /ontology          контекстная карта компании',
-    '  /automate          автоматизация процесса',
-    '  /stack             текущий стек',
-    '  /mckinsey          почему консалтинг умирает',
-    '  /transform         ai-readiness check',
-    '  /agents            микро-переговоры агентов',
-    '  /apply             подать заявку',
+    '  /coordination      межагентная коммуникация',
+    '',
+    'программа:',
+    '  /apply             подать заявку на спринт',
     '  /about             о программе',
+  ],
+  '/due-diligence': [
+    '$ skill "due-diligence" --company "target-co"',
+    '',
+    'подключение MCP серверов...',
+    '  [mcp] crunchbase       -> connected',
+    '  [mcp] linkedin          -> connected',
+    '  [mcp] company-registry  -> connected',
+    '  [mcp] news-api          -> connected',
+    '',
+    'запуск 6 параллельных агентов...',
+    '  v финансовый анализ      -> revenue model, unit economics',
+    '  v команда                -> 47 сотрудников, 3 ключевых ухода',
+    '  v рынок                  -> TAM $2.3B, 12 конкурентов',
+    '  v технологии             -> стек, патенты, tech debt',
+    '  v репутация              -> 234 упоминания, sentiment 0.72',
+    '  v риски                  -> 3 red flags, 2 yellow flags',
+    '',
+    'отчёт: 28 страниц за 4 минуты',
+    'раньше: 2 аналитика, 2 недели, $15k',
+    '',
+    '-> reports/due-diligence-target-co.md',
+  ],
+  '/onboarding': [
+    '$ skill "onboarding" --employee "новый менеджер"',
+    '',
+    'создание персонального onboarding-агента...',
+    '',
+    'день 1:',
+    '  -> доступы: jira, slack, notion, crm -- автоматически',
+    '  -> welcome pack: структура, культура, ключевые люди',
+    '  -> first meeting: подготовлен контекст по команде',
+    '',
+    'неделя 1:',
+    '  -> агент отвечает на вопросы по процессам 24/7',
+    '  -> автоматический чеклист: 23 из 30 пунктов закрыто',
+    '  -> buddy-система: напоминания, follow-ups',
+    '',
+    'результат: time-to-productivity 2 недели вместо 2 месяцев',
+    'HR-менеджеру: 6 часов вместо 40 часов на человека',
+  ],
+  '/hr-pipeline': [
+    '$ skill "hr-pipeline" --role "product manager"',
+    '',
+    'текущий flow (ручной):',
+    '  резюме -> HR читает -> интервью -> решение',
+    '  среднее время: 3 недели на кандидата',
+    '',
+    'ai-native flow:',
+    '  [1] скрининг          -> 200 резюме за 2 минуты',
+    '  [2] pre-qualification -> автоматический опросник',
+    '  [3] scoring           -> fit по 12 критериям',
+    '  [4] scheduling        -> автоматическая запись на интервью',
+    '',
+    'результат:',
+    '  200 резюме -> 12 кандидатов -> 4 интервью',
+    '  время: 15 минут вместо 3 недель',
+    '  человеку: провести 4 финальных интервью',
+  ],
+  '/support': [
+    '$ skill "support-automation" --mode "production"',
+    '',
+    'агент обрабатывает входящие...',
+    '',
+    'за последние 24 часа:',
+    '  входящих: 156 тикетов',
+    '  автоматически решено: 119 (76%)',
+    '  эскалация к человеку: 37 (24%)',
+    '',
+    'категории:',
+    '  FAQ / how-to       -> 89 (авто-ответ + ссылка на docs)',
+    '  баг-репорты        -> 23 (триаж + jira + уведомление dev)',
+    '  billing            -> 18 (проверка + решение)',
+    '  сложные кейсы      -> 26 (контекст + draft + эскалация)',
+    '',
+    'CSAT: 4.6/5 (vs 4.1 до автоматизации)',
+    'среднее время ответа: 12 секунд',
+  ],
+  '/sales': [
+    '$ skill "lead-qualification" --source "inbound"',
+    '',
+    'новых лидов за сутки: 23',
+    '',
+    'автоматическая квалификация:',
+    '  A-tier (ready to close)  -> 3 лида',
+    '  B-tier (nurture)         -> 8 лидов',
+    '  C-tier (not fit)         -> 12 лидов',
+    '',
+    'A-tier: draft ответов готов',
+    'B-tier: добавлены в nurture-цепочку',
+    '',
+    'человеку: approve 3 ответа, остальное -- автомат',
+  ],
+  '/marketing': [
+    '$ skill "content-pipeline" --channel "all"',
+    '',
+    'запуск контент-пайплайна...',
+    '  [1] аналитика     -> топ-10 тем по engagement за неделю',
+    '  [2] генерация     -> 5 постов, 3 рассылки, 1 лонгрид',
+    '  [3] адаптация     -> telegram, linkedin, email -- автоформат',
+    '  [4] расписание    -> оптимальное время публикации',
+    '',
+    'время: 4 минуты вместо 2 дней',
+    'контент готов к ревью -> drafts/week-07/',
   ],
   '/daily-brief': [
     '$ skill "daily-brief" --run',
     '',
-    'источники: calendar, gmail, telegram, linear',
-    'сканирую 47 непрочитанных...',
+    'подключение MCP серверов...',
+    '  [mcp] google-calendar    -> connected (3 events today)',
+    '  [mcp] gmail              -> connected (47 unread)',
+    '  [mcp] telegram           -> connected (12 chats active)',
+    '  [mcp] linear             -> connected (sprint: week 2)',
+    '  [mcp] notion             -> connected (workspace synced)',
     '',
-    '-> 3 встречи сегодня (первая: 10:00 product sync)',
-    '-> 2 срочных треда в telegram',
-    '-> дедлайн спринта: пятница',
+    'агент сканирует источники...',
     '',
-    'бриф сохранён -> daily/2026-02-10.md',
+    'приоритеты дня:',
+    '  1. product sync в 10:00 (zoom) -- подготовить OKR update',
+    '  2. 2 срочных треда: партнёр ждёт ответ, клиент escalation',
+    '  3. дедлайн спринта: пятница, 3 задачи open',
+    '',
+    'рекомендации:',
+    '  -> перенести обед с 12:00 на 13:00 (конфликт с sync)',
+    '  -> draft ответ партнёру готов, approve?',
+    '  -> escalation: агент подготовил context summary',
+    '',
+    'бриф сохранён -> daily/2026-02-15.md',
+    'время выполнения: 8 секунд',
   ],
   '/research': [
-    '$ skill "deep-research" --company "target"',
+    '$ skill "deep-research" --topic "market analysis"',
     '',
     'запуск 4 параллельных агентов...',
-    '  v финансовый анализ     -> 47 источников',
-    '  v рыночное позиционирование -> 23 отчёта',
-    '  v инвестиционный тезис  -> синтезировано',
-    '  v оценка команды        -> 12 профилей',
+    '  v конкурентный ландшафт    -> 34 компании',
+    '  v тренды рынка             -> 18 отчётов за Q1',
+    '  v клиентские инсайты       -> 230 отзывов',
+    '  v ценообразование          -> 12 benchmarks',
     '',
     'результат: 3 минуты вместо 3 дней',
-  ],
-  '/draft': [
-    '$ skill "draft" --type "proposal"',
-    '',
-    'загрузка контекста: claude.md + онтология компании',
-    '',
-    '-> intro (identity-first позиционирование)',
-    '-> проблема (70% компаний застряли)',
-    '-> решение (3 недели трансформации)',
-    '-> доказательства (кейсы: vc, legal, agency)',
-    '',
-    'черновик готов -> review before send',
-  ],
-  '/calendar': [
-    '$ calendar --today',
-    '',
-    '10:00  product sync (zoom)',
-    '12:00  обед с инвестором',
-    '14:00  подготовка ai-native sprint',
-    '16:00  office hours',
-    '',
-    'свободные слоты: 11:00-12:00, 15:00-16:00',
-  ],
-  '/dd': [
-    '$ skill "due-diligence" --target "series-b-fintech"',
-    '',
-    'zoom-транскрипт загружен. запуск 4 агентов:',
-    '  [1] финансы       -> ARR $4.2M, burn rate, runway 18mo',
-    '  [2] рынок         -> tam $12B, 3 прямых конкурента',
-    '  [3] тезис         -> fit с портфелем: 87%, синергии с 3 компаниями',
-    '  [4] команда       -> 2x ex-stripe, CTO из MIT, 94% retention',
-    '',
-    'полная карточка сделки: 3 минуты',
-    'ручная работа аналитика: 3 дня',
-    '',
-    'рекомендация: proceed to partner meeting',
-    '-> сохранено: deals/series-b-fintech.md',
   ],
   '/ontology': [
     '$ ontology --map "company-context"',
@@ -112,72 +194,8 @@ const commands: Record<string, string[]> = {
     '',
     '-> agents теперь видят всю компанию',
   ],
-  '/automate': [
-    '$ process --automate "inbound-leads"',
-    '',
-    'текущий flow:',
-    '  email -> менеджер читает -> crm -> ответ',
-    '  среднее время: 4.2 часа',
-    '',
-    'ai-native flow:',
-    '  email -> агент классифицирует -> crm auto',
-    '  -> draft ответа -> человек approve',
-    '  среднее время: 12 секунд',
-    '',
-    'экономия: 6 человек -> 1 оператор',
-    'roi за первый месяц: 340%',
-  ],
-  '/stack': [
-    'текущий стек:',
-    '',
-    '  claude code     skills, evals, MCP',
-    '  cursor          ai-native IDE',
-    '  github          версионирование, CI/CD',
-    '  linear          project management',
-    '  telegram        коммуникация, боты',
-    '  airtable        данные, CRM',
-    '',
-    'парадигмы > инструменты.',
-    'инструменты меняются каждый месяц.',
-    'context engineering остаётся.',
-  ],
-  '/mckinsey': [
-    '$ explain "why-consulting-dies"',
-    '',
-    '"нет компании, которая перестала',
-    ' платить палантиру. это indefinitely.',
-    ' вопрос -- кто построит такую же',
-    ' зависимость через ai?"',
-    '                        -- степан гершуни',
-    '',
-    'консалтинг теперь скейлится:',
-    '  10 человек обслуживают 100 клиентов',
-    '  благодаря ai-агентам',
-    '',
-    'юрист загрузил 50-страничное дело в ai.',
-    'результат за секунды стоил бы gbp 500k',
-    'и месяцы работы в лондонской фирме.',
-  ],
-  '/transform': [
-    '$ aim --check "ai-readiness"',
-    '',
-    'ai-assisted -> ai-native -> agent-centric',
-    '(используем gpt)  (сначала ai)  (агенты = workforce)',
-    '',
-    'ваша компания:',
-    '  [?] платите людям за работу агентов?',
-    '  [?] где ai даёт 10x рычаг?',
-    '  [?] какие данные есть только у вас?',
-    '  [!] может ли стартап из 5 повторить вас за 6 мес?',
-    '',
-    'internet-native: 15 лет',
-    'mobile-native:   8 лет',
-    'ai-native:       3 года',
-    '',
-    '-> время на адаптацию заканчивается',
-  ],
-  '/agents': [
-    '$ orchestrate --demo "micro-negotiations"',
+  '/coordination': [
+    '$ orchestrate --demo "inter-agent-communication"',
     '',
     'маркетинг-агент:',
     '  "фича x готова, включаю в кампанию"',
@@ -188,33 +206,34 @@ const commands: Record<string, string[]> = {
     'sales-агент:',
     '  "3 лида ждут эту фичу, отправляю апдейт"',
     '',
-    'координация 24/7 без участия людей',
-    'агенты договариваются между собой',
+    'межагентная коммуникация 24/7',
+    'обмен знаниями между отделами',
     '',
     '-> output = people * skill * time * ai_leverage^n',
   ],
   '/apply': [
-    '-> заявка: t.me/alex_named',
+    'открываю форму заявки...',
     '',
+    'AI-Native Organizations Sprint',
     'старт: 23 марта 2026. 3 недели.',
-    'identity -> architecture -> process.',
+    'программа для руководителей, менеджеров и профессионалов.',
   ],
   '/about': [
-    'ai mindset x cyberos',
-    'ai native company sprint',
+    'ai mindset x cybos',
+    'ai-native organizations sprint',
     '',
-    '6+ когорт. 200+ выпускников.',
+    '10+ когорт. 700+ выпускников.',
     'от персональных ai-навыков',
-    'до организационной трансформации.',
+    'до трансформации компании.',
     '',
     '70% -- люди и процессы',
     '30% -- софт',
     '',
     'не курс по промптингу.',
-    'трансформация компании в ai-native организацию.',
+    'архитектура ai-native организации.',
     '',
-    'агенты -- новые сотрудники.',
-    'кто это понимает, строится по-другому.',
+    'агенты -- не инструменты.',
+    'они -- новая команда.',
   ],
 }
 
@@ -244,7 +263,7 @@ function ClickableOutput({ text, onCommand }: { text: string; onCommand: (cmd: s
 export function InteractiveTerminal() {
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<{ type: 'cmd' | 'out'; text: string }[]>([
-    { type: 'out', text: 'ai native company sprint // console' },
+    { type: 'out', text: 'ai-native organizations sprint // console' },
     { type: 'out', text: 'введите /help для списка навыков' },
   ])
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -285,19 +304,22 @@ export function InteractiveTerminal() {
           setInput('/')
           inputRef.current?.focus()
           setTimeout(() => {
-            setInput('/help')
+            setInput('/hel')
             setTimeout(() => {
-              setInput('')
-              setSuggestions([])
-              setHistory(prev => [...prev, { type: 'cmd', text: '/help' }])
-              if (commands['/help']) {
-                commands['/help'].forEach((line, i) => {
-                  setTimeout(() => {
-                    setHistory(prev => [...prev, { type: 'out', text: line }])
-                  }, i * 60)
-                })
-              }
-            }, 300)
+              setInput('/help')
+              setTimeout(() => {
+                setInput('')
+                setSuggestions([])
+                setHistory(prev => [...prev, { type: 'cmd', text: '/help' }])
+                if (commands['/help']) {
+                  commands['/help'].forEach((line, i) => {
+                    setTimeout(() => {
+                      setHistory(prev => [...prev, { type: 'out', text: line }])
+                    }, i * 100)
+                  })
+                }
+              }, 400)
+            }, 500)
           }, 800)
         }
       },
@@ -320,7 +342,7 @@ export function InteractiveTerminal() {
 
     if (trimmed === 'clear') {
       setHistory([
-        { type: 'out', text: 'ai native company sprint // console' },
+        { type: 'out', text: 'ai-native organizations sprint // console' },
         { type: 'out', text: 'введите /help для списка навыков' },
       ])
       setInput('')
@@ -331,8 +353,25 @@ export function InteractiveTerminal() {
       commands[trimmed].forEach((line, i) => {
         setTimeout(() => {
           setHistory(prev => [...prev, { type: 'out', text: line }])
-        }, i * 60)
+        }, i * 100)
       })
+      // Open Tally popup for /apply
+      if (trimmed === '/apply') {
+        setTimeout(() => {
+          const w = window as any
+          if (w.Tally) w.Tally.openPopup('vGMZB0', {
+            layout: 'modal',
+            width: 600,
+            hideTitle: true,
+            overlay: true,
+            emoji: { text: '/apply', animation: 'flash' },
+            hiddenFields: {
+              default_choice: 'AI-native orgs {sprint} / 23 марта / €1490',
+              utm_source: 'bos-sprint-landing',
+            },
+          })
+        }, 400)
+      }
     } else if (trimmed) {
       setHistory(prev => [
         ...prev,
