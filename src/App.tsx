@@ -10,6 +10,13 @@ import { SystemMap } from './components/SystemMap'
 import { CustomCursor } from './components/CustomCursor'
 import { WeekIdentitySVG, WeekArchitectureSVG, WeekProcessSVG } from './components/VisualMetaphors'
 
+/* ── Analytics Helper ── */
+
+function track(event: string, data?: Record<string, string | number>) {
+  const w = window as any
+  if (w.umami) w.umami.track(event, data)
+}
+
 /* ── Tally Form Helper ── */
 
 const TALLY_FORM_ID = 'vGMZB0'
@@ -21,6 +28,7 @@ const TALLY_PRODUCTS = {
 } as const
 
 function openTallyForm(product: keyof typeof TALLY_PRODUCTS = 'sprint') {
+  track('apply-click', { product })
   const w = window as any
   const choice = TALLY_PRODUCTS[product]
   if (w.Tally) {
@@ -505,6 +513,7 @@ function ThemeToggle() {
     const next = theme === 'dark' ? 'light' : 'dark'
     setTheme(next)
     document.documentElement.setAttribute('data-theme', next)
+    track('theme-toggle', { theme: next })
   }
 
   return (
@@ -627,6 +636,7 @@ export default function App() {
     if (e.key === '/' && !slashOpen) {
       e.preventDefault()
       setSlashOpen(true)
+      track('slash-overlay-open')
     }
     if (e.key === 'Escape' && slashOpen) {
       setSlashOpen(false)

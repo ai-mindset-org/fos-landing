@@ -350,6 +350,9 @@ export function InteractiveTerminal() {
     }
 
     if (commands[trimmed]) {
+      // Track terminal command in Umami
+      const w = window as any
+      if (w.umami) w.umami.track('terminal-command', { command: trimmed })
       commands[trimmed].forEach((line, i) => {
         setTimeout(() => {
           setHistory(prev => [...prev, { type: 'out', text: line }])
