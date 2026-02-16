@@ -648,6 +648,41 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleSlashKey)
   }, [handleSlashKey])
 
+  // ── Scroll depth tracking (25/50/75/100%) ──
+  useEffect(() => {
+    const fired = new Set<number>()
+    const onScroll = () => {
+      const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100)
+      for (const threshold of [25, 50, 75, 100]) {
+        if (pct >= threshold && !fired.has(threshold)) {
+          fired.add(threshold)
+          track('scroll-depth', { depth: threshold })
+        }
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // ── Section visibility tracking ──
+  useEffect(() => {
+    const sections = ['program', 'map', 'console', 'speakers', 'results', 'pricing', 'open-channel']
+    const seen = new Set<string>()
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !seen.has(entry.target.id)) {
+          seen.add(entry.target.id)
+          track('section-view', { section: entry.target.id })
+        }
+      })
+    }, { threshold: 0.3 })
+    sections.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="app-wrapper">
       <CustomCursor />
