@@ -99,9 +99,8 @@ function SlashOverlay({ open, onClose }: { open: boolean; onClose: () => void })
       '/schedule': ['переход к расписанию...'],
       '/contacts': [
         'контакты:',
-        '  telegram   -> t.me/ai_mind_set',
-        '  alex       -> t.me/alex_named',
-        '  stepan     -> t.me/sgershuni',
+        '  написать   -> t.me/ai_mind_set_team',
+        '  канал      -> t.me/ai_mind_set',
         '  email      -> info@aimindset.org',
       ],
     }
@@ -354,9 +353,8 @@ function OpenChannelTerminal() {
       '/contacts': [
         'контакты программы:',
         '',
-        '  telegram   -> t.me/ai_mind_set',
-        '  alex       -> t.me/alex_named (Александр Поваляев)',
-        '  stepan     -> t.me/sgershuni (Степан Гершуни)',
+        '  написать   -> t.me/ai_mind_set_team',
+        '  канал      -> t.me/ai_mind_set',
         '  email      -> info@aimindset.org',
         '  website    -> https://aimindset.org',
       ],
@@ -1057,69 +1055,139 @@ export default function App() {
           </Reveal>
 
           <Reveal>
-            <div className="speakers-lead-grid">
-              <div className="speaker-lead-card">
-                <div className="speaker-left">
-                  <div className="speaker-avatar-wrap">
-                    <img src="/speakers/stepan-gershuni.jpg" alt="Степан Гершуни" className="speaker-lead-avatar" />
-                  </div>
-                  <div className="speaker-lead-links">
-                    <a href="https://github.com/sgershuni" target="_blank" rel="noopener">github</a>
-                    <a href="https://x.com/sgershuni" target="_blank" rel="noopener">twitter</a>
-                    <a href="https://t.me/sgershuni" target="_blank" rel="noopener">telegram</a>
+            <div className="spk-leads">
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/stepan-gershuni.jpg" alt="Степан Гершуни" className="spk-avatar spk-avatar--lg" />
+                  <div className="spk-meta">
+                    <h3 className="spk-name">Степан Гершуни</h3>
+                    <div className="spk-role">cyber.fund // Credentia // Deep Skills</div>
+                    <div className="spk-links">
+                      <a href="https://github.com/cyberFund/ai-native-organizations/tree/main" target="_blank" rel="noopener">github</a>
+                      <a href="https://x.com/cyntro_py" target="_blank" rel="noopener">twitter</a>
+                      <a href="https://t.me/cryptoEssay" target="_blank" rel="noopener">telegram</a>
+                    </div>
                   </div>
                 </div>
-                <div className="speaker-lead-info">
-                  <h3 className="speaker-lead-name">Степан Гершуни</h3>
-                  <div className="speaker-lead-role">Principal // cyber.fund // CybOS</div>
-                  <p className="speaker-lead-bio">фаундер Credentia, Deep Skills. 200+ портфельных компаний. 15+ лет в крипте и AI. автор CybOS, agent-centric методологии и AI-Native Organizations Playbook.</p>
-                </div>
+                <p className="spk-bio">инвестор в cyber.fund, основатель Credentia и Deep Skills. автор @cryptoEssay, исследователь AI-native organizations.</p>
               </div>
-              <div className="speaker-lead-card">
-                <div className="speaker-left">
-                  <div className="speaker-avatar-wrap">
-                    <img src="/speakers/alexander-povaliaev.jpg" alt="Александр Поваляев" className="speaker-lead-avatar" />
-                  </div>
-                  <div className="speaker-lead-links">
-                    <a href="https://www.linkedin.com/in/povalyaev/" target="_blank" rel="noopener">linkedin</a>
-                    <a href="https://aimindset.org" target="_blank" rel="noopener">website</a>
-                    <a href="https://t.me/alex_named" target="_blank" rel="noopener">telegram</a>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/alexander-povaliaev.jpg" alt="Александр Поваляев" className="spk-avatar spk-avatar--lg" />
+                  <div className="spk-meta">
+                    <h3 className="spk-name">Александр Поваляев</h3>
+                    <div className="spk-role">Founder // AI Mindset</div>
+                    <div className="spk-links">
+                      <a href="https://www.linkedin.com/in/povaliaev/" target="_blank" rel="noopener">linkedin</a>
+                      <a href="https://aimindset.org" target="_blank" rel="noopener">website</a>
+                      <a href="https://t.me/ai_mind_set_team" target="_blank" rel="noopener">telegram</a>
+                    </div>
                   </div>
                 </div>
-                <div className="speaker-lead-info">
-                  <h3 className="speaker-lead-name">Александр Поваляев</h3>
-                  <div className="speaker-lead-role">Founder // AI Mindset</div>
-                  <p className="speaker-lead-bio">фаундер AI Mindset. 10+ когорт, 700+ выпускников. context engineering, агентные пайплайны, evals. ex-product в HR-tech и EdTech.</p>
-                </div>
+                <p className="spk-bio">основатель AI Mindset, создатель сообщества AI-билдеров &#123;space&#125;. 10+ лет в продукте, 700+ выпускников, 10+ когорт.</p>
               </div>
             </div>
           </Reveal>
 
           <Reveal>
-            <p className="secret-speakers-intro">воркшоп-спикеры &ndash; практики из индустрии с реальным field-опытом внедрения AI. каждый проходит dry-run подготовку с командой программы. мы приглашаем новых спикеров в каждую когорту &ndash; людей, которые прямо сейчас строят агентные системы в своих компаниях.</p>
-            <div className="secret-speakers-grid">
-              <div className="secret-card-glass">
-                <div className="secret-card-icon">[?]</div>
-                <div className="secret-card-domain">// ai-агенты</div>
-                <div className="secret-card-hint">строит агентные системы в продакшне. реальные кейсы масштабирования.</div>
+            <div className="spk-section-label">// гостевые спикеры</div>
+            <p className="spk-section-desc">практики из индустрии с реальным field-опытом внедрения AI. формат: 2&ndash;2.5 часа hands-on воркшоп, конкретная бизнес-функция, артефакт на выходе.</p>
+            <div className="spk-guests">
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/alex-amyotov.jpg" alt="Алексей Амётов" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Алексей Амётов</h4>
+                    <div className="spk-role">Hopes&amp;Fears // The Village // Setka</div>
+                    <div className="spk-tag">AI &times; медиа</div>
+                    <div className="spk-links">
+                      <a href="https://www.linkedin.com/in/amyote/" target="_blank" rel="noopener">linkedin</a>
+                      <a href="https://amyote.com" target="_blank" rel="noopener">website</a>
+                      <a href="https://github.com/amytoff" target="_blank" rel="noopener">github</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">сооснователь Hopes&amp;Fears, The Village, Setka (acq. TinyMCE). исследует LLM в реальных сценариях &ndash; контент-пайплайны, evaluation, мониторинг.</p>
               </div>
-              <div className="secret-card-glass">
-                <div className="secret-card-icon">[?]</div>
-                <div className="secret-card-domain">// маркетинг</div>
-                <div className="secret-card-hint">AI-native маркетинг. воронки, контент-пайплайны, аналитика на агентах.</div>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/seva-ustinov.jpg" alt="Всеволод Устинов" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Всеволод Устинов</h4>
+                    <div className="spk-role">Founder // Plurio AI</div>
+                    <div className="spk-tag">AI &times; маркетинг</div>
+                    <div className="spk-links">
+                      <a href="https://www.linkedin.com/in/sevaustinov/" target="_blank" rel="noopener">linkedin</a>
+                      <a href="https://x.com/sevaustinov" target="_blank" rel="noopener">twitter</a>
+                      <a href="https://t.me/vsevolodustinovchannel" target="_blank" rel="noopener">telegram</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">основатель Plurio AI (prev. Elly Analytics), IT-Agency. 20 лет в маркетинге. AI-native воронки, full-funnel аналитика на агентах.</p>
               </div>
-              <div className="secret-card-glass">
-                <div className="secret-card-icon">[?]</div>
-                <div className="secret-card-domain">// operations</div>
-                <div className="secret-card-hint">трансформация операционных процессов. автоматизация через agent infra.</div>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/dima-khanarin.jpg" alt="Дима Ханарин" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Дима Ханарин</h4>
+                    <div className="spk-role">Founder // codos.ai</div>
+                    <div className="spk-tag">AI &times; operations</div>
+                    <div className="spk-links">
+                      <a href="https://x.com/dimakhanarin" target="_blank" rel="noopener">twitter</a>
+                      <a href="https://linkedin.com/in/dimakhanarin" target="_blank" rel="noopener">linkedin</a>
+                      <a href="https://t.me/khanarin" target="_blank" rel="noopener">telegram</a>
+                      <a href="https://codos.ai" target="_blank" rel="noopener">website</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">CEO Everclear ($30M+ raised), ex-McKinsey. строит AI операционные системы для команд в codos.ai &ndash; 100x результат через agent infra.</p>
               </div>
-              <div className="secret-card-glass">
-                <div className="secret-card-icon">[?]</div>
-                <div className="secret-card-domain">// продукт</div>
-                <div className="secret-card-hint">AI-first продуктовый подход. от прототипа до production pipeline.</div>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/ivan-zamesin.jpg" alt="Иван Замесин" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Иван Замесин</h4>
+                    <div className="spk-role">Advanced JTBD // producthowto</div>
+                    <div className="spk-tag">AI &times; продукт</div>
+                    <div className="spk-links">
+                      <a href="https://t.me/zamesin" target="_blank" rel="noopener">telegram</a>
+                      <a href="https://zamesin.ru" target="_blank" rel="noopener">website</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">автор Advanced JTBD, 11K выпускников. основатель Мета и Focus Calendar. AI-first подход от исследования потребностей до agent-driven продукта.</p>
+              </div>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/bayram-annakov.jpg" alt="Байрам Аннаков" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Байрам Аннаков</h4>
+                    <div className="spk-role">onsa.ai // ex-App in the Air</div>
+                    <div className="spk-tag">AI &times; sales</div>
+                    <div className="spk-links">
+                      <a href="https://t.me/ProductsAndStartups" target="_blank" rel="noopener">telegram</a>
+                      <a href="https://onsa.ai" target="_blank" rel="noopener">website</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">co-founder и ex-CEO App in the Air. строит AI sales tools в onsa.ai. B2B outbound, квалификация лидов и автоматизация продаж на агентах.</p>
+              </div>
+              <div className="spk-card">
+                <div className="spk-header">
+                  <img src="/speakers/daniel-kravtsov.jpeg" alt="Даниил Кравцов" className="spk-avatar" />
+                  <div className="spk-meta">
+                    <h4 className="spk-name">Даниил Кравцов</h4>
+                    <div className="spk-role">Improvado</div>
+                    <div className="spk-tag">AI &times; data</div>
+                    <div className="spk-links">
+                      <a href="https://www.linkedin.com/in/danielkravtsov/" target="_blank" rel="noopener">linkedin</a>
+                      <a href="https://improvado.io" target="_blank" rel="noopener">website</a>
+                    </div>
+                  </div>
+                </div>
+                <p className="spk-bio">Improvado &ndash; маркетинг-аналитика для enterprise (Philips, Havas, McCann). data pipelines и AI-автоматизация аналитических процессов в масштабе.</p>
               </div>
             </div>
-            <p className="secret-speakers-intro" style={{ marginTop: '20px' }}>формат: 2&ndash;2.5 часа hands-on воркшоп. конкретная бизнес-функция. артефакт на выходе. если вы практик и хотите провести воркшоп &ndash; напишите нам.</p>
           </Reveal>
         </div>
       </section>

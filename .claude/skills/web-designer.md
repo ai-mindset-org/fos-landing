@@ -23,7 +23,7 @@ triggers:
 
 **BOS Sprint документы:**
 ```
-/AI mindset {shared}/ai-mindset-2026/Labs/s2 – BOS sprint/
+/AI mindset {shared}/ai-mindset-2026/Labs/s2 – ai-native sprint/
 ```
 - `{AIM} {deal} BOS Sprint Agreements Gershuni – 2026-02-10` — условия, цены, таймлайн
 - `{AIM} {context} Gershuni Course Structure Discussion – 2026-02-08` — структура программы, цитаты
