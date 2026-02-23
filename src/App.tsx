@@ -897,7 +897,7 @@ export default function App() {
                     <div className="week-label">PERSONAL OS + TEAM PROCESSES</div>
                     <p className="week-dates">23&ndash;28 марта &middot; пн лекция / вт фокус / ср воркшоп / пт гостевая лекция</p>
                     <p className="week-theme">от личных навыков к командным процессам.</p>
-                    <p className="week-desc">что получите: работающая персональная операционная система, кастомные навыки для ежедневных задач, первые командные автоматизации, приоритизированный список 10 процессов компании.</p>
+                    <p className="week-desc">что получите: работающий персональный AI-ассистент с harness на выбор. MCPs, APIs, модели и навыки &ndash; установлены. навыки для коммуникации, life management, аналитики и дизайна. приоритизированный список 10 процессов компании.</p>
                     <p className="week-stack">инструменты: Claude Code, Obsidian, MCP, терминальные интеграции</p>
                   </div>
                   <div className="week-metaphor-side">
@@ -926,7 +926,7 @@ export default function App() {
                     <div className="week-label">INFRASTRUCTURE + ОНТОЛОГИЯ</div>
                     <p className="week-dates">30 марта &ndash; 4 апреля &middot; пн лекция / вт фокус / ср воркшоп / пт гостевая лекция</p>
                     <p className="week-theme">компания становится читаемой для AI.</p>
-                    <p className="week-desc">что получите: онтология компании, безопасность и access rights для агентов, agent harness для бизнес-задач. организационный дизайн, плейбуки внедрения.</p>
+                    <p className="week-desc">что получите: карта бизнес-процессов компании (задачи, процессы, подрядчики). приоритизированный список AI-экспериментов. онтология данных и контекстный граф. knowledge graph и self-improvement системы. spec-driven автоматизация процессов.</p>
                     <p className="week-stack">инструменты: vault, context directories, agent harness, security policies</p>
                   </div>
                   <div className="week-metaphor-side">
@@ -955,7 +955,7 @@ export default function App() {
                     <div className="week-label">COMPANY FUNCTIONS + ROI</div>
                     <p className="week-dates">6&ndash;11 апреля &middot; пн лекция / вт фокус / ср+пт воркшопы / сб Demo Day</p>
                     <p className="week-theme">конкретная бизнес-функция &rarr; agent pipeline с метриками.</p>
-                    <p className="week-desc">3&ndash;4 воркшопа с приглашёнными экспертами. кейсы по функциям: маркетинг, продажи, саппорт, HR, операции, финансы, разработка, стратегия.</p>
+                    <p className="week-desc">что получите: готовый автоматизированный бизнес-процесс (sales, marketing, HR, legal, product). требования к данным, безопасности и мониторингу. skill/workflow lifecycle. профиль AI champions, кандидаты в команде. 90-дневный план экспериментов.</p>
                     <div className="company-functions-grid">
                       <span className="company-fn-tag">маркетинг</span>
                       <span className="company-fn-tag">продажи</span>
@@ -1123,7 +1123,7 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-                <p className="spk-bio">основатель Plurio AI (prev. Elly Analytics), IT-Agency. 20 лет в маркетинге. AI-native воронки, full-funnel аналитика на агентах.</p>
+                <p className="spk-bio">основатель Plurio AI (prev. Elly Analytics), IT-Agency. 20 лет в маркетинге, &euro;100M+ рекламных бюджетов. воркшоп: quick wins в аналитике &ndash; инсайты за минуты вместо часов. только общедоступные инструменты.</p>
               </div>
               <div className="spk-card">
                 <div className="spk-header">
@@ -1170,7 +1170,7 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-                <p className="spk-bio">co-founder и ex-CEO App in the Air. строит AI sales tools в onsa.ai. B2B outbound, квалификация лидов и автоматизация продаж на агентах.</p>
+                <p className="spk-bio">co-founder и ex-CEO App in the Air. строит AI sales tools в onsa.ai. воркшоп: классификация inbound-трафика, B2B/B2C outbound, полный sales pipeline на агентах с ROI-метриками.</p>
               </div>
               <div className="spk-card">
                 <div className="spk-header">
@@ -1331,7 +1331,7 @@ export default function App() {
             <div className="pricing-extras">
               <p className="pricing-pos-link">POS Sprint (&euro;890) &ndash; <a href="https://aimindset.org/sprint-pos" target="_blank" rel="noopener">отдельная программа</a></p>
               <p className="early-bird-note">реферальная программа: 10% комиссия</p>
-              <p className="pricing-enterprise">корпоративные заказы &ndash; напишите нам, ответим в течение дня</p>
+              <p className="pricing-enterprise">корпоративные заказы &ndash; <a href="https://t.me/ai_mind_set_team" target="_blank" rel="noopener">напишите нам</a>, ответим в течение дня</p>
             </div>
           </Reveal>
         </div>
@@ -1345,6 +1345,15 @@ export default function App() {
           </Reveal>
           <Reveal>
             <OpenChannelTerminal />
+          </Reveal>
+          <Reveal>
+            <div className="open-channel-contacts">
+              <a href="https://t.me/ai_mind_set_team" target="_blank" rel="noopener" className="open-channel-contact-link">написать нам</a>
+              <span className="open-channel-contact-sep">/</span>
+              <a href="https://t.me/ai_mind_set" target="_blank" rel="noopener" className="open-channel-contact-link">канал</a>
+              <span className="open-channel-contact-sep">/</span>
+              <a href="mailto:info@aimindset.org" className="open-channel-contact-link">info@aimindset.org</a>
+            </div>
           </Reveal>
         </div>
       </section>

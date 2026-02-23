@@ -1814,6 +1814,30 @@ section {
 }
 .open-channel-input::placeholder { color: var(--terminal-dim); }
 
+.open-channel-contacts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+.open-channel-contact-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+.open-channel-contact-link:hover {
+    border-bottom-color: var(--accent-blue);
+}
+.open-channel-contact-sep {
+    color: var(--terminal-dim);
+    opacity: 0.4;
+}
+
 /* ── footer (dark) ── */
 /* contacts section */
 .contacts-grid {
